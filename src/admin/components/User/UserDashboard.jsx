@@ -7,12 +7,19 @@ import axiosInstance from "../../../../axiosInstance";
 import { emitInfoToast } from "../../../site/components/Toast/EmitToast";
 import "./User.css"
 import { Pagination, Dropdown, Button } from "react-bootstrap";
+import Popup from "../../../site/components/Popup/Popup"
+import AddUser from "./addUser";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [activePage, setActivePage] = useState(1); // State for active page
-  const [itemsPerPage, setItemsPerPage] = useState(5); // State for items per page
+  const [itemsPerPage, setItemsPerPage] = useState(10); // State for items per page
+  const [openPopup, setOpenPopup] = useState(false);
+
+  const handleClosePopup = () => {
+    setOpenPopup(false);
+  };
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["UserInstance"],
@@ -189,18 +196,18 @@ const UserDashboard = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handleItemsPerPageChange(2)}>2</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleItemsPerPageChange(3)}>3</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleItemsPerPageChange(4)}>4</Dropdown.Item>
               <Dropdown.Item onClick={() => handleItemsPerPageChange(5)}>5</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleItemsPerPageChange(10)}>10</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleItemsPerPageChange(15)}>15</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleItemsPerPageChange(20)}>20</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           
 
             <div style={{marginLeft:"20px"}}>
-              <Link to={"/admin/add-user"}>
-              <Button color="primary m-2 w-100">Add User </Button>
-              </Link>
+              {/* <Link to={"/admin/add-user"}> */}
+              <Button color="primary m-2 w-100" onClick={() => setOpenPopup(true)}>Add User </Button>
+              {/* </Link> */}
               
             </div>
         </div>
@@ -235,6 +242,10 @@ const UserDashboard = () => {
           </Pagination>
         </div>
       </div>
+
+      <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
+              <AddUser handleClosePopup={handleClosePopup}/>
+      </Popup>
     </>
   );
 };
