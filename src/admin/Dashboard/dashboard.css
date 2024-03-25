@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+*{
+    font-family: 'Ubuntu', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    
+}
+
+:root {
+    --white: #FEFAF3;
+    --blue: #2a2185;
+    --gray: #E0DBD3;
+    --gray1: #62605A;
+    --black: #434343;
+    
+}
+
+body{
+    background: linear-gradient(45deg,#B38E40, #FAFAB8, #CBB266, #FAFAB8);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+
+
+/* ---------------------Cards------------------- */
+.cardBoxes{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* grid-gap: 5px; */
+}
+
+.cardBoxes .card{
+    position: relative;
+    background: var(--gray);
+    max-height: 150px;
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    cursor: pointer;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.cardBoxes .card .numbers{
+    position: relative;
+    font-weight: 500;
+    font-size: 2.0rem;
+    color: var(--gray1);
+    margin-right: 55px;
+}
+
+.cardBoxes .card .cardName{
+    color: var(--black);
+    font-size: 0.9rem;
+    margin-top: 5px; 
+}
+
+.cardBoxes .card .iconBx{
+    color: var(--gray1);
+    font-size: 3.5rem;  
+}
+
+.cardBoxes .card:hover{
+    background: var(--white);
+}
+
+.cardBoxes .card:hover .numbers,
+.cardBoxes .card:hover .cardName,
+.cardBoxes .card:hover .iconBx{
+    color: var(--black);
+}
+
+/* CSS for charts */
+
+.charts1{
+    display: grid;
+    position: relative;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 16px;
+    width: 100%;
+    padding: 20px;
+    margin-top: 1px;
+}
+
+.chart11{
+    background: var(--gray);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow:  0 7px 25px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    color: var(--black);
+    position: relative;
+    height: 450px; 
+    min-height: 290px;
+    max-height: 450px;
+}
+
+.chart11 h2{
+    margin-bottom: 5px;
+    font-size: 25px;
+    color: var(--gray1);
+    text-align: center;
+}
+
+canvas{
+    width: 100%;
+    max-height: 80%;
+    border-collapse: collapse;
+    position: absolute;
+    
+}
+
+.chart11:hover{
+    background: var(--white);
+    color: var(--black);
+}
+
+/* Responsive Code Starts Form Here */
+@media (max-width:991px) {
+    .navigation{
+        left: -300px;
+    }
+    .navigation.active {
+        width: 60px;
+        left: 0;
+    }
+    .main{
+        width: 100%;
+        left: 0;
+    }
+    .main.active{
+        left: 60px; 
+    }
+    .cardBoxes{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 880px) {
+    .navigation.active {
+        width: 300px;
+        left: 0;
+    }
+    .main{
+        width: 100%;
+       
+    }
+    .main.active{
+        left: 300px;
+       
+    }
+    .charts1{ 
+        grid-template-columns: 1fr;
+    }
+
+    #barChart{
+        padding: 15px;
+    }
+
+    #doughnut-chart{
+        padding: 50px;
+    }
+
+    #pieChart{
+        margin-left: 20%;
+    }
+}
+
+@media (max-width: 668px) {
+    .cardBoxes{ 
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .user {
+        min-width: 40px;
+    }
+    .navigation{
+        width: 100%;
+        left: -100%;
+        z-index: 1000;
+    }
+    .navigation.avtive{
+        width: 100%;
+        left: 0;
+    }
+    .toggle{
+        z-index: 1001;
+    }
+    #doughnut-chart{
+        padding: 10px;
+    }
+    #doughnut{
+        padding: 0;
+    }
+}

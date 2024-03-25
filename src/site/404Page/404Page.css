@@ -1,0 +1,30 @@
+
+.cont-404{
+height: 90vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.cont-404 img{
+    height: 70vh;
+    width: 50vw;
+}
+
+.cont-404 button{
+    padding: 12px 15px;
+    background-color: #62605A;
+    border: none;
+    border-radius: 50px;
+    background: #62605A;
+    color: #f0f0f0;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+
+.cont-404 button:hover{
+    background:#E0DBD3 ;
+    color: #62605A;
+}

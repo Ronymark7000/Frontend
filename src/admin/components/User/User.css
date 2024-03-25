@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+*{
+    font-family: 'Ubuntu', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    
+}
+
+.searchbar{
+    position: absolute;
+    width: 430px;
+    left: 68%;
+}
+
+.searchbar label{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  
+}
+
+.searchbar label ion-icon {
+    position: absolute;
+    top: 11px;
+    left: 10px;
+    font-size: 1.2rem;
+    color: var(--gray1);
+} 
+
+.searchbar label input{
+    width: 60%;
+    height: 38px;
+    border-radius: 40px;
+    padding: 5px 20px;
+    padding-left: 35px;
+    font-size: 16px;
+    outline: none;
+    border: 1px solid var(--white);
+    pointer-events: all;
+    flex: 1;
+}  
+
+.table{
+    margin-left: 20px;
+    margin-top: 25px;
+    align-self: center;
+    height: 100vh;
+    width: 1100px;
+    overflow-x: scroll;   
+    color: #62605A;  
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+  }
+
+  tr:hover {background-color: coral;}
+
+.btn2{
+    width: 50px;
+    margin-left: 20px;
+    border-radius: 10px;
+    border: none;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 5px;
+}  
+
+.btn2 ion-icon{
+    font-size: 1.5rem;
+    color: aliceblue;
+}

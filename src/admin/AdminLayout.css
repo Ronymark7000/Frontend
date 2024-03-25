@@ -1,0 +1,12 @@
+
+.row1a {
+  display: flex;
+}
+
+.acol {
+  width: 300px
+}
+
+.bcol {
+  padding-top: 48px;
+}

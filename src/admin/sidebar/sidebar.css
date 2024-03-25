@@ -1,0 +1,218 @@
+:root {
+    --white: #FEFAF3;
+    --blue: #2a2185;
+    --gray: #E0DBD3;
+    --gray1: #62605A;
+    --black: #434343;
+    
+}
+
+.first{
+    background: linear-gradient(45deg,#B38E40, #FAFAB8, #CBB266, #FAFAB8);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container1{
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+
+/* ======For Navigation Bar Css======== */
+
+.navigation{
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    background: var(--white);
+    border-left: 10px solid var(--white);
+    transition: 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.navigation.active{
+    width: 80px;
+}
+
+.navigation ul{
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.navigation ul li{
+    position: relative;
+    width: 100%;
+    list-style: none;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered{
+    background-color: var(--gray);
+}
+
+
+.navigation ul li:nth-child(1) {
+    margin-bottom: 40px;
+    pointer-events: none;
+}
+
+.navigation ul li a{
+    position: relative;
+    display: block;
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    color: var(--gray1);
+}
+
+.navigation ul li:hover a,
+.navigation ul li.hovered a{
+    color: var(--black);
+}
+
+.navigation ul li a .icon{
+    position: relative;
+    display: block;
+    min-width: 60px;
+    height: 40px;
+    line-height: 56px;
+    text-align: center;
+}
+
+.navigation ul li a .icon ion-icon {
+    font-size: 1.75rem;
+}
+
+.navigation ul li a .title {
+    font-size: medium;
+    position: relative;
+    display: block;
+    padding: 0 10px;
+    height: 40px;
+    line-height: 40px;
+    text-align: start;
+    white-space: nowrap;
+}
+
+/* For toggle bar and user image */
+
+.main2{
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 50px;
+    /* background: linear-gradient(45deg,#B38E40, #FAFAB8, #CBB266, #FAFAB8); */
+    transition: 0.94s;
+}
+
+.main2.active{
+    width: calc(100% - 80px);
+    left: 80px;
+    transition: 0.5s;
+    /* background: linear-gradient(45deg,#B38E40, #FAFAB8, #CBB266, #FAFAB8); */
+}
+
+.topbar2{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.toggle{
+    position: relative;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+.rates{
+    position: absolute;
+    width: 480px;
+    left: 10%;
+}
+
+.rates label{
+    position: relative;
+    width: 100%;
+    margin-left: 330px;
+}
+
+.rates label ion-icon {
+    position: absolute;
+    top: 11px;
+    left: 10px;
+    font-size: 1.2rem;
+    color: var(--gray1);
+} 
+
+.rates label input{
+    width: 60%;
+    height: 40px;
+    border-radius: 40px;
+    padding: 5px 20px;
+    padding-left: 35px;
+    font-size: 18px;
+    outline: none;
+    border: 1px solid var(--white);
+    pointer-events: all;
+}
+
+.rates1{
+    position: absolute;
+    width: 480px;
+    left: 35%;
+}
+
+.rates1 label{
+    position: relative;
+    width: 100%;
+    margin-left: 360px;
+}
+
+.rates1 label input{
+    width: 60%;
+    height: 40px;
+    border-radius: 40px;
+    padding: 5px 20px;
+    padding-left: 35px;
+    font-size: 18px;
+    outline: none;
+    border: 1px solid var(--white);
+    pointer-events: all;
+}
+
+.user{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.user img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
