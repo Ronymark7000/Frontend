@@ -4,7 +4,7 @@ import axiosInstance from "../../../../axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { UserSchema } from "../../../services/UserValidation";
 import { useEffect, useState } from "react";
-import { Pagination } from "react-bootstrap";
+import { emitInfoToast, emitSuccessToast } from "../../../site/components/Toast/EmitToast";
 
 function AddUser({editUser}) {
     const navigate = useNavigate();
@@ -26,8 +26,10 @@ function AddUser({editUser}) {
         try {
           if (editUser) {
             await axiosInstance.put(`/user/${editUser?.userId}`, values);
+            emitInfoToast("Updated User Successfully")
           } else {
             await axiosInstance.post(`/user`, values);
+            emitSuccessToast("User Added Successfully")
           }
           navigate("/admin/user-dashboard");
           // Reset the form after successful submission
@@ -39,7 +41,7 @@ function AddUser({editUser}) {
 
     return (
         <>
-            <div style={{ width: "1000px", color:"#62605A"}}>
+            <div style={{ width: "900px", color:"#62605A", marginTop:"50px", marginLeft:"130px"}}>
                 <Formik initialValues={ form } onSubmit={forSubmit} validationSchema={UserSchema} enableReinitialize>
                     {({ errors, touched }) => (
                     <Form style={{ width: "100%"}}>

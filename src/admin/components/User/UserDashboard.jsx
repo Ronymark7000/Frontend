@@ -2,17 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo } from "react";
 import DataTable from "../DataTable";
 import { getUsers } from "../../../services/UserInstance";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../axiosInstance";
 import { emitInfoToast } from "../../../site/components/Toast/EmitToast";
 import "./User.css"
-import { Pagination, Dropdown } from "react-bootstrap";
+import { Pagination, Dropdown, Button } from "react-bootstrap";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [activePage, setActivePage] = useState(1); // State for active page
-  const [itemsPerPage, setItemsPerPage] = useState(1); // State for items per page
+  const [itemsPerPage, setItemsPerPage] = useState(5); // State for items per page
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["UserInstance"],
@@ -179,38 +179,48 @@ const UserDashboard = () => {
   }
 
   return (
-
-    
     <>
       <div className="mt-5 d-flex flex-column">
-        <div className="searchbar mt-3 mb-2">
-          <label className= "d-flex align-items-center">
-            <input type="text" placeholder="Search here..." value={searchQuery} onChange={handleSearchInputChange}/>
-            <ion-icon name="search-outline"></ion-icon> 
-          </label>  
-        </div>
-        <div className="mt-5">
-          <DataTable style={{color: "#62605A"}} columns={columns} data={paginatedData} />
-        </div>
-
-        <div className="mt-3 d-flex align-items-center">
-          <span>Show items per page:</span>
-          <Dropdown className="ml-2">
-            <Dropdown.Toggle variant="light" id="dropdown-basic">
+        <div className="mt-3 d-flex align-items-center w-50" style={{paddingLeft:"28px"}}>
+          <span><b style={{color:"#62605A"}}>No of Records:</b></span>
+          <Dropdown className="ml-2" >
+            <Dropdown.Toggle variant="light" id="dropdown-basic" style={{marginLeft:"10px", width:"60px"}}>
               {itemsPerPage}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handleItemsPerPageChange(1)}>1</Dropdown.Item>
               <Dropdown.Item onClick={() => handleItemsPerPageChange(2)}>2</Dropdown.Item>
               <Dropdown.Item onClick={() => handleItemsPerPageChange(3)}>3</Dropdown.Item>
               <Dropdown.Item onClick={() => handleItemsPerPageChange(4)}>4</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleItemsPerPageChange(5)}>5</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+          
+
+            <div style={{marginLeft:"20px"}}>
+              <Link to={"/admin/add-user"}>
+              <Button color="primary m-2 w-100">Add User </Button>
+              </Link>
+              
+            </div>
         </div>
 
+        
 
+        <div className="searchbar mt-3 mb-2">
+          <label className= "d-flex align-items-center">
+            <input type="text" placeholder="Filter search here ..." value={searchQuery} onChange={handleSearchInputChange}/>
+            <ion-icon name="search-outline"></ion-icon> 
+          </label>  
+        </div>
+        </div>
 
+        <div className="d-flex flex-column align-items-center">
+        <div className="mt-1">
+          <DataTable style={{color: "#62605A"}} columns={columns} data={paginatedData} />
+        </div>
+
+        
         <div className="mt-3">
           <Pagination>
             <Pagination.First onClick={() => handlePageChange(1)} />
