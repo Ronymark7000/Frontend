@@ -80,22 +80,22 @@ function Sidebar(){
                   </li>
     
                   <li>
-                    <a href="#">
+                    <Link to={"/admin/item-dashboard"}>
                       <span className="icon">
                       <ion-icon name="grid-outline"></ion-icon>
                       </span>
                       <span className="title">Item Dashboard</span>
-                    </a>
+                    </Link>
                   </li>
                   
 
                   <li>
-                    <a href="#">
+                    <Link to={"/admin/add-item"}>
                       <span className="icon">
                         <ion-icon name="add-circle-outline"></ion-icon>
                       </span>
                       <span className="title">Add Items</span>
-                    </a>
+                    </Link>
                   </li>
     
                   <li>

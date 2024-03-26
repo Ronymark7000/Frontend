@@ -13,6 +13,9 @@ import Confirmation from "./authentication/EmailVerify/Confirmation";
 import AddUser from "./admin/components/User/addUser";
 import UserDashboard from "./admin/components/User/UserDashboard";
 import EditUser from "./admin/components/User/EditUser";
+import ItemDashboard from "./admin/components/Items/ItemDashboard";
+import AddItems from "./admin/components/Items/AddItems";
+import UpdateItem from "./admin/components/Items/UpdateItem";
 
 
 const AppRoutes = () => {
@@ -48,6 +51,10 @@ const AppRoutes = () => {
           <Route path="user-dashboard" element={<UserDashboard />} />
           <Route path="add-user" element={<AddUser />} />
           <Route path="edit-user/:id" element={<EditUser />} />
+
+          <Route path="item-dashboard" element={<ItemDashboard />} />
+          <Route path="add-item" element={<AddItems />} />
+          <Route path="edit-item/:itemCode" element={<UpdateItem />} />
 
        
         </Route>
