@@ -74,3 +74,27 @@ th, td {
     font-size: 1.5rem;
     color: aliceblue;
 }
+
+/* CSS to change the color of pagination */
+
+  
+  .pagination .page-link {
+    /* Your desired text color */
+    color: #333;
+  }
+  
+  .pagination .page-item.active .page-link {
+    /* Your desired active page text color */
+    color: #fff;
+    border-color: #62605A ;
+    /* Your desired active page background color */
+    background-color: #62605A; /* Example color */
+  }
+  
+  .pagination .page-link:hover {
+    /* Your desired hover color */
+    background-color: #E0DBD3;
+    /* Your desired hover text color */
+    color: #62605A;
+  }
+  
