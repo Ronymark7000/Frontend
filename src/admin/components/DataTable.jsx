@@ -12,7 +12,7 @@ const DataTable = ({ columns = [], data = [] }) => {
     getCoreRowModel: getCoreRowModel(),
   });
   return (
-    <div>
+    <div className="table-container">
       <table className="table table-rounded table-hover h-100 table-light" >
         <thead >
           {table.getHeaderGroups().map((headerGroup) => (

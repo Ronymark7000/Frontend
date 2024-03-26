@@ -1,8 +1,6 @@
 import { Dialog, DialogContent } from "@mui/material";
 import React from "react";
 
-
-
 export default function Popup(props) {
     const { children, openPopup, setOpenPopup } = props;
     

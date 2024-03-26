@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SiteLayout from "./site/SiteLayout";
+import ReactToast from "./site/components/Toast/ReactToast";
 import HomePage from "./site/HomePage";
 import AdminLayout from "./admin/AdminLayout";
 import Dashboard from "./admin/Dashboard/Dashboard";
@@ -16,6 +17,8 @@ import EditUser from "./admin/components/User/EditUser";
 
 const AppRoutes = () => {
   return (
+    <>
+    <ReactToast/>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SiteLayout />}>
@@ -51,6 +54,7 @@ const AppRoutes = () => {
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
+    </>
   );
 };
 

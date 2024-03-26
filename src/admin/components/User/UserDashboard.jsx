@@ -16,6 +16,8 @@ const UserDashboard = () => {
   const [activePage, setActivePage] = useState(1); // State for active page
   const [itemsPerPage, setItemsPerPage] = useState(10); // State for items per page
   const [openPopup, setOpenPopup] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
+  const [isEditing, setIsEditing] = useState(false); // Track if editing or adding
 
   const handleClosePopup = () => {
     setOpenPopup(false);
@@ -25,6 +27,22 @@ const UserDashboard = () => {
     queryKey: ["UserInstance"],
     queryFn: () => getUsers(),
   });
+
+  const handleDataChange = () => {
+    refetch();
+  };
+
+  const handleAddUser = () => {
+    setCurrentUser(null); // Reset current user for adding
+    setIsEditing(false); // Set mode to adding
+    setOpenPopup(true);
+  };
+
+  const handleEditUser = (user) => {
+    setCurrentUser(user); // Set current user for editing
+    setIsEditing(true); // Set mode to editing
+    setOpenPopup(true);
+  };
 
   const filteredData = useMemo(() => {
     if (!data) return [];
@@ -116,8 +134,18 @@ const UserDashboard = () => {
           const userId = row.original.userId;
 
           const handleEdit = () => {
+            const user = row.original;
+              if (user) {
+                setCurrentUser(user);
+                setIsEditing(true);
+                setOpenPopup(true);
+              } else {
+                console.log("User not found");
+              }
+            // setCurrentUser(row.original)
+            // setOpenPopup(true)
             // console.log("Edit clicked for ID:", userId);
-            navigate(`/admin/edit-user/${userId}`);
+            // navigate(`/admin/edit-user/${userId}`);
           };
 
           return (
@@ -179,7 +207,8 @@ const UserDashboard = () => {
       
     ];
   }, [navigate, refetch]);
-  
+
+
 
   if (isLoading) {
     return <div>Loading...Please Wait</div>;
@@ -206,7 +235,7 @@ const UserDashboard = () => {
 
             <div style={{marginLeft:"20px"}}>
               {/* <Link to={"/admin/add-user"}> */}
-              <Button color="primary m-2 w-100" onClick={() => setOpenPopup(true)}>Add User </Button>
+              <Button color="primary m-2 w-100" onClick={() => { setOpenPopup(true); setIsEditing(false); }} >Add User </Button>
               {/* </Link> */}
               
             </div>
@@ -244,7 +273,7 @@ const UserDashboard = () => {
       </div>
 
       <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
-              <AddUser handleClosePopup={handleClosePopup}/>
+              <AddUser handleClosePopup={handleClosePopup} currentUser={currentUser} isEditing={isEditing} onDataChange={handleDataChange}/>
       </Popup>
     </>
   );

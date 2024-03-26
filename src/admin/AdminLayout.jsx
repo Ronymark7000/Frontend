@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../admin/sidebar/Sidebar";
-import ReactToast from "../site/components/Toast/ReactToast";
+// import ReactToast from "../site/components/Toast/ReactToast";
 import "./AdminLayout.css";
 
 
 const AdminLayout = () => {
   return (
     <>
-    <ReactToast/>
+ 
       {/* <div className="container mt-2"> */}
       <div className="row1a">
         <div className="acol"> 

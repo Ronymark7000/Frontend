@@ -43,13 +43,14 @@ const Login = () => {
       const response = await handleLogin(email, password);
 
       if (response?.success == true && response!= null) {
-        emitSuccessToast("Logged In Successfully");
+        
 
         const response= await axiosInstance.get("/profile")
         localStorage.setItem("userProfile", JSON.stringify(response?.data?.response));
         const userRole = response?.data?.response?.role
         
         userRole === "Admin" ? navigate("/admin") : navigate("/");
+        emitSuccessToast("Logged In Successfully");
         //Cookies.set("userToken", JSON.stringify(response?.response));
         
       }else{

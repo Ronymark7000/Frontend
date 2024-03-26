@@ -69,7 +69,26 @@ function Sidebar(){
                       <span className="title">Dashboard</span>
                     </Link>
                   </li>
+
+                  <li>
+                    <Link to={"/admin/user-dashboard"}>
+                      <span className="icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                      </span>
+                      <span className="title">User Details</span>
+                    </Link>
+                  </li>
     
+                  <li>
+                    <a href="#">
+                      <span className="icon">
+                      <ion-icon name="grid-outline"></ion-icon>
+                      </span>
+                      <span className="title">Item Dashboard</span>
+                    </a>
+                  </li>
+                  
+
                   <li>
                     <a href="#">
                       <span className="icon">
@@ -122,24 +141,6 @@ function Sidebar(){
                       </span>
                       <span className="title">Customer Order</span>
                     </a>
-                  </li>
-    
-                  <li>
-                    <Link to={"/admin/user-dashboard"}>
-                      <span className="icon">
-                        <ion-icon name="people-outline"></ion-icon>
-                      </span>
-                      <span className="title">User Details</span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link to={"/admin/add-user"}>
-                      <span className="icon">
-                      <ion-icon name="person-add-outline"></ion-icon>
-                      </span>
-                      <span className="title">Add Users</span>
-                    </Link>
                   </li>
     
                   <li>

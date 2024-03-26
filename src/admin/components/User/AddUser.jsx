@@ -6,34 +6,45 @@ import { UserSchema } from "../../../services/UserValidation";
 import { useEffect, useState } from "react";
 import { emitInfoToast, emitSuccessToast } from "../../../site/components/Toast/EmitToast";
 
-function AddUser({editUser, handleClosePopup}) {
+function AddUser({currentUser, isEditing, handleClosePopup, onDataChange}) {
     const navigate = useNavigate();
     
-    const [form, setform] = useState({
-      username: "",
-      password: "",
-      email: "",
-      role: "User",
-    });
-
-    useEffect(() => {
-        if (editUser) {
-          setform((prev) => ({ ...prev, ...editUser }));
+    const [form, setForm] = useState({
+        username: "",
+        password: "",
+        email: "",
+        role: "User",
+      });
+    
+      useEffect(() => {
+        if (isEditing) {
+          // If editing, set form data to currentUser data
+          setForm(currentUser);
+        } else {
+          // If adding, reset form data
+          setForm({
+            username: "",
+            password: "",
+            email: "",
+            role: "User",
+          });
         }
-      }, [editUser]);
+      }, [currentUser, isEditing]);
+    
 
     const forSubmit = async (values, { resetForm }) => {
         try {
-          if (editUser) {
-            await axiosInstance.put(`/user/${editUser?.userId}`, values);
+          if (isEditing) {
+            await axiosInstance.put(`/user/${currentUser?.userId}`, values);
             emitInfoToast("Updated User Successfully")
           } else {
             await axiosInstance.post(`/user`, values);
             emitSuccessToast("User Added Successfully")
           }
-          navigate("/admin/user-dashboard");
+          onDataChange();
           handleClosePopup();
           resetForm();
+          navigate("/admin/user-dashboard");
         } catch (error) {
           console.error(error);
         }
