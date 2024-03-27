@@ -46,23 +46,171 @@ function AddItems({editItem}){
 
     return (
         <>
-            <div style={{ width: "500px", color:"#62605A", marginLeft:"120px", marginRight:"120px" }}>
+            <div style={{ width: "1000px", color:"#62605A", marginLeft:"380px", marginRight:"120px", marginTop:"20px"}}>
+                
                 <Formik initialValues={ form } onSubmit={forSubmit} >
-                   
-                    <Form style={{ width: "95%"}}>
+                  
+                    <Form style={{width: "100%"}}>
                         <div>
                             <Label for="exampleAbc" style={{marginTop:"5px", marginBottom: "15px", fontSize: "35px"}}>
                                 <b>Item Form</b>
                             </Label>
                         </div>
 
+                  <div className="d-flex justify-content-between">
+                  {/* Left side of the form */}
+                   
+                      <div style={{ width:"390px", marginRight:"45px", paddingTop:"10px"}}>
                         <div className="form-group row mb-3 justify-content-center" style={{ width: "100%" }}>
-                            <label className="col-sm-4 col-form-label" htmlFor="exampleInputFirstName"><b>First Name</b></label>
+                            <label className="col-sm-4 col-form-label" htmlFor="exampleInputItemName"><b>Item Name</b></label>
                             <div className="col-sm-8">
-                                <Field className="form-control" name="firstname" placeholder="Enter first name" type="text"/>
-                                
+                                <Field className="form-control" name="itemName" placeholder="Enter item name" type="text"/>
+                                    {/* {errors.itemName && touched.itemName ? (
+                                    <div className="text-danger blockquote-footer mt-1">
+                                        {errors.itemName}
+                                    </div>
+                                    ) : null} */}
                             </div>
                         </div>
+                      </div>
+                        
+                    {/* Rigth Side of the form */}
+                      <div style={{ width:"500px", paddingTop:"5px"}}>
+
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputItemName"><b>Item Name</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control" name="itemName" placeholder="Enter item name" type="text"/>
+                            {/* {errors.itemName && touched.itemName ? (
+                              <div className="text-danger blockquote-footer mt-1">
+                                {errors.itemName}
+                              </div>
+                            ) : null} */}
+                          </div>
+                        </div>    
+
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputMaterial"><b>Material</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control w-100" name="material" as="select">
+                              <option>Gold</option>
+                              <option>Silver</option>
+                            </Field>
+                          </div>
+                        </div>
+
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputKarat"><b>Karat</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control w-100" name="karat" as="select">
+                              <option>24K</option>
+                              <option>22K</option>
+                              <option>20K</option>
+                              <option>18K</option>
+                            </Field>
+                          </div>
+                        </div>
+
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputGrossWeight"><b>Gross Weight</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control" name="grossWeight" placeholder="Enter gross weight" type="text"/>
+                            {/* {errors.itemName && touched.itemName ? (
+                              <div className="text-danger blockquote-footer mt-1">
+                                {errors.itemName}
+                              </div>
+                            ) : null} */}
+                          </div>
+                        </div> 
+
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputWastage"><b>Wastage</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control" name="wastage" placeholder="Enter material wastage" type="text"/>
+                            {/* {errors.itemName && touched.itemName ? (
+                              <div className="text-danger blockquote-footer mt-1">
+                                {errors.itemName}
+                              </div>
+                            ) : null} */}
+                          </div>
+                        </div> 
+
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputNetWeight"><b>Net Weight</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control" name="netWeight" placeholder="Enter net weight" type="text"/>
+                            {/* {errors.itemName && touched.itemName ? (
+                              <div className="text-danger blockquote-footer mt-1">
+                                {errors.itemName}
+                              </div>
+                            ) : null} */}
+                          </div>
+                        </div> 
+
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputNetWeight"><b>Gold Price</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control" name="goldPrice" placeholder="Enter gold price" type="text"/>
+                            {/* {errors.itemName && touched.itemName ? (
+                              <div className="text-danger blockquote-footer mt-1">
+                                {errors.itemName}
+                              </div>
+                            ) : null} */}
+                          </div>
+                        </div> 
+
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputNetWeight"><b>Cost of Stone</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control" name="costOfStone" placeholder="Enter cost of stone" type="text"/>
+                            {/* {errors.itemName && touched.itemName ? (
+                              <div className="text-danger blockquote-footer mt-1">
+                                {errors.itemName}
+                              </div>
+                            ) : null} */}
+                          </div>
+                        </div> 
+
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputNetWeight"><b>Manufacture Cost</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control" name="manufactureCost" placeholder="Enter manufacture cost" type="text"/>
+                            {/* {errors.itemName && touched.itemName ? (
+                              <div className="text-danger blockquote-footer mt-1">
+                                {errors.itemName}
+                              </div>
+                            ) : null} */}
+                          </div>
+                        </div> 
+
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputDescription"><b>Description</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control" name="description" placeholder="Enter description" as="textarea" rows={3} />
+                            {/* {errors.description && touched.description ? (
+                              <div className="text-danger blockquote-footer mt-1">
+                                {errors.description}
+                              </div>
+                            ) : null} */}
+                          </div>
+                        </div>
+                        
+                        <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
+                          <label className="col-sm-4 col-form-label" htmlFor="exampleInputNetWeight"><b>Total Cost</b></label>
+                          <div className="col-sm-8">
+                            <Field className="form-control" name="manufactureCost" placeholder="Enter manufacture cost" type="text"/>
+                            {/* {errors.itemName && touched.itemName ? (
+                              <div className="text-danger blockquote-footer mt-1">
+                                {errors.itemName}
+                              </div>
+                            ) : null} */}
+                          </div>
+                        </div> 
+
+
+
+                      </div>
+                    </div>
 
                     </Form>
                 

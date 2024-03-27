@@ -14,6 +14,7 @@ function AddUser({currentUser, isEditing, handleClosePopup, onDataChange}) {
         password: "",
         email: "",
         role: "User",
+        enabled: true,
       });
     
       useEffect(() => {
@@ -27,6 +28,7 @@ function AddUser({currentUser, isEditing, handleClosePopup, onDataChange}) {
             password: "",
             email: "",
             role: "User",
+            enabled: true,
           });
         }
       }, [currentUser, isEditing]);
@@ -127,9 +129,19 @@ function AddUser({currentUser, isEditing, handleClosePopup, onDataChange}) {
                         </div>
 
                         <div className="form-group row mb-3 justify-content-center" style={{ width: "100%" }}>
+                            <label className="col-sm-4 col-form-label" htmlFor="exampleInputRole"><b>AccStatus</b></label>
+                            <div className="col-sm-8 d-flex justify-content-center align-items-center">
+                                <Field className="form-control" name="enabled" as="select">
+                                    <option value={true}>Enabled</option>
+                                    <option value={false}>Disabled</option>
+                                </Field>
+                            </div>
+                        </div>
+
+                        <div className="form-group row mb-3 justify-content-center" style={{ width: "100%" }}>
                             <label className="col-sm-4 col-form-label" htmlFor="exampleInputRole"><b>Role</b></label>
                             <div className="col-sm-8 d-flex justify-content-center align-items-center">
-                                <Field className="form-control m-2 w-75" name="role" as="select">
+                                <Field className="form-control w-75" name="role" as="select">
                                     <option>User</option>
                                     <option>Admin</option>
                                 </Field>

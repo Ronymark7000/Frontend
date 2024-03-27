@@ -32,33 +32,39 @@ const UserDashboard = () => {
     refetch();
   };
 
-  const handleAddUser = () => {
-    setCurrentUser(null); // Reset current user for adding
-    setIsEditing(false); // Set mode to adding
-    setOpenPopup(true);
-  };
+  // const handleAddUser = () => {
+  //   setCurrentUser(null); // Reset current user for adding
+  //   setIsEditing(false); // Set mode to adding
+  //   setOpenPopup(true);
+  // };
 
-  const handleEditUser = (user) => {
-    setCurrentUser(user); // Set current user for editing
-    setIsEditing(true); // Set mode to editing
-    setOpenPopup(true);
-  };
+  // const handleEditUser = (user) => {
+  //   setCurrentUser(user); // Set current user for editing
+  //   setIsEditing(true); // Set mode to editing
+  //   setOpenPopup(true);
+  // };
 
   const filteredData = useMemo(() => {
     if (!data) return [];
     if (!searchQuery) return data?.data?.response ?? [];
 
   // Filter data based on searchQuery
-  return data?.data?.response.filter((user) =>
-    Object.values(user).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
-  }, [data, searchQuery]);
+  return data?.data?.response.filter((user) => {
+    // Convert the boolean value of enabled to string "Enabled" or "Disabled"
+    const accStatus = user.enabled ? "Enabled" : "Disabled";
 
-  const handleSearchInputChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
+    // Check if any value contains the search query or if the account status matches the search query
+    const containsQuery = Object.values(user).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    ) || accStatus.toLowerCase().includes(searchQuery.toLowerCase());
+
+        return containsQuery;
+      });
+    }, [data, searchQuery]);
+
+      const handleSearchInputChange = (event) => {
+        setSearchQuery(event.target.value);
+      };
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
@@ -124,6 +130,15 @@ const UserDashboard = () => {
         cell: ({ getValue }) => {
           const isAvailable = getValue();
           return <div>{String(isAvailable)}</div>;
+        },
+      },
+
+      {
+        accessorKey: "enabled",
+        header: "Acc Status",
+        cell: ({ getValue }) => {
+          const isEnabled = getValue();
+          return <div>{isEnabled ? "Enabled" : "Disabled"}</div>;
         },
       },
 
