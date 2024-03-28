@@ -3,6 +3,7 @@ import "./homepage.css";
 import CarouselPage from "./CarousalPages/CarousalPage";
 import Cards from "./ImageCard/Cards";
 import Cards2 from "./ImageCard/Cards2";
+import Locations from "./LocationInfo/Location";
 
 const HomePage = () => {
   return (
@@ -15,18 +16,23 @@ const HomePage = () => {
           `
       </div>
       <div className="category">
-        <p className="fw-bolder d-flex justify-content-center"> 
-          <h1> Elevate Your Shopping</h1>
-        </p>
-        <p className="d-flex justify-content-center">
-          <h3>Shop by Category</h3>
-        </p>
+        <h1> 
+          <p className="fw-bolder d-flex justify-content-center"> 
+            Elevate Your Shopping
+          </p>
+        </h1>
+
+        <h3>
+          <p className="d-flex justify-content-center">
+            Shop by Category
+          </p>
+        </h3>
         <div className="containers">
 
-          <div class="top-row">
+          <div className="top-row">
             <Cards/>
           </div>
-          <div class="bottom-row">
+          <div className="bottom-row">
             <Cards2/>
           </div>
         </div>
@@ -39,8 +45,8 @@ const HomePage = () => {
       </div>
     </div>
 
-    <div >
-    Footer
+    <div>
+    <Locations />
     </div>
     </>
   )

@@ -3,6 +3,8 @@ import { Label } from "reactstrap";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../axiosInstance";
+import empty1 from "../../../assets/empty.png";
+import { Button } from "react-bootstrap";
 
 function AddItems({editItem}){
     const navigate = useNavigate();  
@@ -28,6 +30,11 @@ function AddItems({editItem}){
         }
       },
     [editItem]);
+
+    const handleImageChange = (event) => {
+      const image = event.target.files[0];
+      setForm((prev) => ({ ...prev, selectedImage: image }));
+    };
 
     const forSubmit = async (values, { resetForm }) => {
         try {
@@ -60,17 +67,38 @@ function AddItems({editItem}){
                   <div className="d-flex justify-content-between">
                   {/* Left side of the form */}
                    
-                      <div style={{ width:"390px", marginRight:"45px", paddingTop:"10px"}}>
-                        <div className="form-group row mb-3 justify-content-center" style={{ width: "100%" }}>
-                            <label className="col-sm-4 col-form-label" htmlFor="exampleInputItemName"><b>Item Name</b></label>
-                            <div className="col-sm-8">
-                                <Field className="form-control" name="itemName" placeholder="Enter item name" type="text"/>
-                                    {/* {errors.itemName && touched.itemName ? (
-                                    <div className="text-danger blockquote-footer mt-1">
-                                        {errors.itemName}
-                                    </div>
-                                    ) : null} */}
-                            </div>
+                      <div style={{ width:"490px", marginRight:"45px"}}>
+                        <div style={{marginLeft:"70px", marginBottom:"15px"}}>
+                        {form.selectedImage ? (
+                          <img
+                            src={URL.createObjectURL(form.selectedImage)}
+                            alt="Selected Image"
+                            style={{ width: "320px", height: "300px", marginTop: "10px" }}
+                          />
+                        ) : (
+                          <img
+                            src={empty1}
+                            alt="Blank Image"
+                            style={{ width: "320px", height: "300px", marginTop: "10px" }}
+                          />
+                        )}
+                          <div style={{marginLeft:"100px"}}>
+                            <p><b>Image Preview</b></p>
+                          </div>
+                        </div>
+
+                        <div className="form-group row mb-3 " style={{ width: "100%" }}>
+                    
+                          <input style={{ marginLeft: "60px" }} className="form-control form-control-sm w-75" type="file" id="formFile" onChange={handleImageChange} />              
+                        </div>
+
+
+                        <div style={{marginLeft:"160px", marginTop:"52px"}}>
+                            <p><b>Select 360 Image</b></p>
+                          </div>
+
+                        <div className="form-group row mb-3 " style={{ width: "100%" }}>
+                          <input style={{ marginLeft: "60px" }} className="form-control form-control-sm w-75" type="file" id="formFile" />              
                         </div>
                       </div>
                         
@@ -186,7 +214,7 @@ function AddItems({editItem}){
                         <div className="form-group row mb-2 justify-content-center" style={{ width: "100%" }}>
                           <label className="col-sm-4 col-form-label" htmlFor="exampleInputDescription"><b>Description</b></label>
                           <div className="col-sm-8">
-                            <Field className="form-control" name="description" placeholder="Enter description" as="textarea" rows={3} />
+                            <Field className="form-control" name="description" placeholder="Enter description" as="textarea" rows={2} />
                             {/* {errors.description && touched.description ? (
                               <div className="text-danger blockquote-footer mt-1">
                                 {errors.description}
@@ -206,14 +234,19 @@ function AddItems({editItem}){
                             ) : null} */}
                           </div>
                         </div> 
-
-
-
                       </div>
                     </div>
 
-                    </Form>
-                
+                    <div>
+                      <Button color="primary m-3 w-100" type="submit" style={{ backgroundColor:"#0ba6ff", paddingLeft:"20px", paddingRight:"20px", marginTop:"20px"}}>
+                        Save Item
+                      </Button>
+
+                      <Button color="secondary m-3 w-75"  style={{ backgroundColor:"#fa5768", marginTop:"20px", marginLeft:"15px"}}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </Form>
                 </Formik>
             </div>
         </>

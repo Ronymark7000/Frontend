@@ -1,0 +1,103 @@
+:root {
+    --white: #f9f9f9;
+    --gray: #A9A9A9;
+    --gray1: #918f8f;
+    --black: #434343;   
+}
+
+.mainFooter{
+    background-color: var(--gray);
+    height: 382px;
+}
+
+.aboutUs{
+    color: var(--black);
+    width: 550px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+}
+
+.links{
+    color: var(--black);
+    width: 350px;
+    margin-left: 60px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+}
+
+.links ul li{
+    color: var(--black);
+}
+
+.links ul li a .titles {
+    font-size: medium;
+    position: relative;
+    display: block;
+    line-height: 30px;
+    text-align: start;
+    white-space: nowrap;
+    color: var(--black);
+}
+
+.socials{
+    /* background-color: red; */
+    width: 360px;
+    min-height: 210px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+    font-size: 16px;
+    color: var(--black);
+}
+
+.socials ul{
+    list-style-type: none;
+    margin-top: 10px;
+}
+
+.socials li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .socials a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: var(--black); /* Grey background color */
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .socials a:hover {
+    background-color: var(--gray1); /* Darker grey background color on hover */
+  }
+
+.foot{
+    color: var(--black);
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 100px;
+}
+
+.footIn{
+    color: var(--black);
+    text-decoration: none;
+}
+
+.line4{
+    margin-top: 40px;
+    max-height: 5px;
+    background-color: #FAF398;
+    border-radius: 5px;
+    margin-top: 9px;
+    margin-left: 35px;
+    margin-right: 35px;
+    color: var(--gray);
+}
+
+

@@ -1,0 +1,13 @@
+.storeInfo{
+    margin-left: 100px;
+}
+.storeInfo p{
+    display: flex; /* Use flexbox */
+    align-items: center; /* Align items vertically */
+    text-align: left; /* Align text to the left */
+}
+.storeInfo p ion-icon {
+    font-size: 1.75rem;
+    margin-right: 5px;
+    font-weight: bold;
+}
