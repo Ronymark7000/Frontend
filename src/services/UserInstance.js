@@ -13,7 +13,6 @@ export const getProfile = async () => {
         }
     })
     .catch(() => null);
-
 }; 
 
 export const handleLogout = () => {

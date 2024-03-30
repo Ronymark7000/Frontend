@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
+import { getCurrentMetalPrice } from "../../../services/PriceInstance";
 
 function Navbar() {
 
@@ -16,6 +17,69 @@ function Navbar() {
   // Function to toggle the navbar's openness
   const toggle = () => setIsOpen(!isOpen);
 
+  const [currentGoldPrice, setCurrentGoldPrice] = useState(null);
+  const [currentGoldPriceGm, setCurrentGoldPriceGm] = useState(null);
+  const [currentSilverPrice, setCurrentSilverPrice] = useState(null);
+  const [currentSilverPriceGm, setCurrentSilverPriceGm] = useState(null);
+  const [currentPriceDate, setCurrentPriceDate] = useState(null);
+
+  useEffect(() => {
+    // Fetch current metal prices when the component mounts
+    getCurrentPrices();
+  }, []);
+
+  const getCurrentPrices = async () => {
+    try {
+      // Fetch current metal prices from your API
+      const response = await getCurrentMetalPrice();
+  
+      // Check if the response was successful
+      if (response.data.success) {
+        // Extract gold and silver prices from the response
+        const { goldTola, gold10gm, silverTola, silver10gm, priceDate } = response.data.response;
+  
+        // Update state with the extracted prices
+        setCurrentGoldPrice(goldTola);
+        setCurrentGoldPriceGm(gold10gm);
+        setCurrentSilverPrice(silverTola);
+        setCurrentSilverPriceGm(silver10gm);
+        setCurrentPriceDate(priceDate);
+      } else {
+        // Handle API error if needed
+        console.error('Error fetching current metal prices:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching current metal prices:', error);
+    }
+  };
+
+  const formatPrice = (priceString) => {
+    const price = parseFloat(priceString.replace(/[^0-9.-]+/g,"")); // Remove non-numeric characters and convert to number
+    return price.toLocaleString('en-IN');
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+  
+    // Function to add the appropriate suffix to the day
+    const addSuffix = (day) => {
+      if (day >= 11 && day <= 13) {
+        return day + 'th';
+      }
+      switch (day % 10) {
+        case 1: return day + 'st';
+        case 2: return day + 'nd';
+        case 3: return day + 'rd';
+        default: return day + 'th';
+      }
+    };
+  
+    return addSuffix(day) + ' ' + month + ', ' + year;
+  };
+
   return(
     <div>
       <div className="topbar">
@@ -30,9 +94,37 @@ function Navbar() {
         </h4>
 
         <div className="rate10">
-          <div><b>Today's Rate</b></div>
-          <div>Gold: Rs 1,21,000</div>
-          <div>Silver: Rs 4,500</div>
+          {currentPriceDate && <div>
+            <div style={{width:"300px", marginLeft:"-90px"}} className="dropdown123">
+              <span><b>Date</b> : {formatDate(currentPriceDate)}</span>
+              <div class="dropdown123-content">
+                <p>Latest Date of the price is </p>
+                <p><b>{formatDate(currentPriceDate)}</b></p>
+              </div>
+            </div>
+          </div>}
+          
+
+          {currentGoldPrice && <div>
+            <div className="dropdown123">
+              <span><b>Gold</b> : NRs {formatPrice(currentGoldPrice)}</span>
+              <div class="dropdown123-content">
+                <p><b>Gold Per Tola</b> : NRs {formatPrice(currentGoldPrice)}</p>
+                <p><b>Gold 10 gm</b> : NRs {formatPrice(currentGoldPriceGm)}</p>
+              </div>
+            </div>
+          </div>}
+
+          {currentSilverPrice && <div>     
+            <div className="dropdown123">
+              <span><b>Silver</b> : NRs {formatPrice(currentSilverPrice)}</span>
+              <div class="dropdown123-content" style={{paddingRight:"30px"}}>
+                <p><b>Silver Per Tola</b> : NRs {formatPrice(currentSilverPrice)}</p>
+                <p><b>Silver 10 gm</b> : NRs {formatPrice(currentSilverPriceGm)}</p>
+              </div>
+            </div>
+          </div>}
+
         </div>
       </div>
   

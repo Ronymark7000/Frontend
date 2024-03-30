@@ -36,7 +36,7 @@ function Location(){
                 </div>
 
                 <div style={{ width:"60%"}}>
-                    <div style={{backgroundColor:"green", height:"50vh", marginTop:"15px",marginRight:"100px"}}>
+                    <div style={{height:"50vh", marginTop:"15px",marginRight:"100px"}}>
                     <iframe style={{width:"100%", height:"390px", frameBorder:"0", scroll:"no" }} src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Ranjana%20Marg+(Sun%20Chadi%20Gahana)&amp;t=h&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
                         <Link to="https://www.gps.ie/">GPS Tracker</Link>
 

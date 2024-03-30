@@ -1,8 +1,9 @@
 import "../sidebar/sidebar.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Prof from "../../assets/profile.png";
 import { Link } from "react-router-dom";
 import { handleLogout } from "../../services/UserInstance";
+import { getCurrentMetalPrice } from "../../services/PriceInstance";
 
 function Sidebar(){
     useEffect(() => {
@@ -41,6 +42,73 @@ function Sidebar(){
           toggleButton.removeEventListener("click", handleToggle);
         };
       }, []);
+
+      const [currentGoldPrice, setCurrentGoldPrice] = useState(null);
+  const [currentGoldPriceGm, setCurrentGoldPriceGm] = useState(null);
+  const [currentSilverPrice, setCurrentSilverPrice] = useState(null);
+  const [currentSilverPriceGm, setCurrentSilverPriceGm] = useState(null);
+  const [currentPriceDate, setCurrentPriceDate] = useState(null);
+
+  useEffect(() => {
+    // Fetch current metal prices when the component mounts
+    getCurrentPrices();
+  }, []);
+
+  const getCurrentPrices = async () => {
+    try {
+      // Fetch current metal prices from your API
+      const response = await getCurrentMetalPrice();
+  
+      // Check if the response was successful
+      if (response.data.success) {
+        // Extract gold and silver prices from the response
+        const { goldTola, gold10gm, silverTola, silver10gm, priceDate } = response.data.response;
+  
+        // Update state with the extracted prices
+        setCurrentGoldPrice(goldTola);
+        setCurrentGoldPriceGm(gold10gm);
+        setCurrentSilverPrice(silverTola);
+        setCurrentSilverPriceGm(silver10gm);
+        setCurrentPriceDate(priceDate);
+      } else {
+        // Handle API error if needed
+        console.error('Error fetching current metal prices:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching current metal prices:', error);
+    }
+  };
+
+  const formatPrice = (priceString) => {
+    if (priceString) {
+      const price = parseFloat(priceString.replace(/[^0-9.-]+/g," ")); // Remove non-numeric characters and convert to number
+      return price.toLocaleString('en-IN');
+    } else {
+      return ""; // or any default value you want to return if priceString is null or undefined
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+  
+    // Function to add the appropriate suffix to the day
+    const addSuffix = (day) => {
+      if (day >= 11 && day <= 13) {
+        return day + 'th';
+      }
+      switch (day % 10) {
+        case 1: return day + 'st';
+        case 2: return day + 'nd';
+        case 3: return day + 'rd';
+        default: return day + 'th';
+      }
+    };
+  
+    return addSuffix(day) + ' ' + month + ', ' + year;
+  };
 
     return (
     <>
@@ -182,14 +250,14 @@ function Sidebar(){
     
                 <div className="rates" style={{pointerEvents: "all"}}>
                     <label>
-                        <input type="text" placeholder="Gold Rate: Nrs ......" disabled/>
+                        <input type="text" placeholder={`Gold Rate: Nrs ${formatPrice(currentGoldPrice)}`} disabled/>
                         {/* <ion-icon name="search-outline"></ion-icon>  */}
                     </label>
                 </div>
 
                 <div className="rates1" style={{pointerEvents: "all"}}>
                     <label>
-                        <input type="text" placeholder="Silver Rate: Nrs ......" disabled/>
+                        <input type="text" placeholder={`Silver Rate: Nrs ${formatPrice(currentSilverPrice)}`} disabled/>
                         {/* <ion-icon name="search-outline"></ion-icon>  */}
                     </label>
                 </div>

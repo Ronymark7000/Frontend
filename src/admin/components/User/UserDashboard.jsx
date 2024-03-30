@@ -32,24 +32,12 @@ const UserDashboard = () => {
     refetch();
   };
 
-  // const handleAddUser = () => {
-  //   setCurrentUser(null); // Reset current user for adding
-  //   setIsEditing(false); // Set mode to adding
-  //   setOpenPopup(true);
-  // };
-
-  // const handleEditUser = (user) => {
-  //   setCurrentUser(user); // Set current user for editing
-  //   setIsEditing(true); // Set mode to editing
-  //   setOpenPopup(true);
-  // };
-
   const filteredData = useMemo(() => {
     if (!data) return [];
     if (!searchQuery) return data?.data?.response ?? [];
 
-  // Filter data based on searchQuery
-  return data?.data?.response.filter((user) => {
+    // Filter data based on searchQuery
+    return data?.data?.response.filter((user) => {
     // Convert the boolean value of enabled to string "Enabled" or "Disabled"
     const accStatus = user.enabled ? "Enabled" : "Disabled";
 
@@ -62,9 +50,9 @@ const UserDashboard = () => {
       });
     }, [data, searchQuery]);
 
-      const handleSearchInputChange = (event) => {
-        setSearchQuery(event.target.value);
-      };
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
