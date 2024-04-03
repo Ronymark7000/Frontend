@@ -97,7 +97,7 @@ function Navbar() {
           {currentPriceDate && <div>
             <div style={{width:"300px", marginLeft:"-90px"}} className="dropdown123">
               <span><b>Date</b> : {formatDate(currentPriceDate)}</span>
-              <div class="dropdown123-content">
+              <div className="dropdown123-content">
                 <p>Latest Date of the price is </p>
                 <p><b>{formatDate(currentPriceDate)}</b></p>
               </div>
@@ -108,7 +108,7 @@ function Navbar() {
           {currentGoldPrice && <div>
             <div className="dropdown123">
               <span><b>Gold</b> : NRs {formatPrice(currentGoldPrice)}</span>
-              <div class="dropdown123-content">
+              <div className="dropdown123-content">
                 <p><b>Gold Per Tola</b> : NRs {formatPrice(currentGoldPrice)}</p>
                 <p><b>Gold 10 gm</b> : NRs {formatPrice(currentGoldPriceGm)}</p>
               </div>
@@ -118,7 +118,7 @@ function Navbar() {
           {currentSilverPrice && <div>     
             <div className="dropdown123">
               <span><b>Silver</b> : NRs {formatPrice(currentSilverPrice)}</span>
-              <div class="dropdown123-content" style={{paddingRight:"30px"}}>
+              <div className="dropdown123-content" style={{paddingRight:"30px"}}>
                 <p><b>Silver Per Tola</b> : NRs {formatPrice(currentSilverPrice)}</p>
                 <p><b>Silver 10 gm</b> : NRs {formatPrice(currentSilverPriceGm)}</p>
               </div>
