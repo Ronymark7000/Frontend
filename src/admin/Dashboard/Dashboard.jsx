@@ -1,3 +1,4 @@
+import GoldSilverChart from "../components/GoldSilverChart/GoldSilverChart";
 import "./dashboard.css"
 
 const Dashboard = () => {
@@ -54,14 +55,18 @@ const Dashboard = () => {
 
       <div className="charts1">
         <div className="chart11">
-          <h2>Inventory Book Scaling</h2>
-          <canvas id="barChart"></canvas>
+          <h2>Gold & Silver Rate</h2>
+    
         </div>
         <div className="chart11" id="doughnut-chart">
           <h2>Order Ratio</h2>
           <canvas id="piechart"></canvas>
         </div>
+
+        
       </div>
+      
+      <GoldSilverChart/>
     </>
   );
 }

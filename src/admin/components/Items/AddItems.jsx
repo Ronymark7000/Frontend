@@ -1,3 +1,4 @@
+import React from "react";
 import { Formik, Form, Field } from "formik";
 import { Label } from "reactstrap";
 import { useEffect, useState } from "react";
@@ -5,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../axiosInstance";
 import empty1 from "../../../assets/empty.png";
 import { Button } from "react-bootstrap";
-import ThreeSixty from "react-360-view";
 import { ItemSchema } from "../../../services/ItemValidation";
 import { emitErrorToast, emitInfoToast, emitSuccessToast } from "../../../site/components/Toast/EmitToast";
+// import VideoInput from ".//VideoInput/VideoInput";
+import "./VideoInput/VideoInput.css"
 
 function AddItems({editItem}){
     const navigate = useNavigate();  
@@ -25,6 +27,7 @@ function AddItems({editItem}){
         description: "",
         totalCost: "",
         itemImageUrl: "",
+        itemVideoUrl:"",
       }
     );
 
@@ -40,25 +43,23 @@ function AddItems({editItem}){
       setForm((prev) => ({ ...prev, itemImageUrl: image }));
     };
 
-    const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+    const inputRef = React.useRef();
 
-    const handleImageChange1 = (event) => {
+    const [source, setSource] = React.useState();
+
+    const handleFileChange = (event) => {
       const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setSelectedImageUrl(reader.result);
-        };
-        reader.readAsDataURL(file);
-      }
+      setForm((prev) => ({ ...prev, itemVideoUrl: file }));
+      const url = URL.createObjectURL(file); // This line causes the error
+      setSource(url);
+      // handleVideoChange(file); // Pass the selected video file to the parent component
     };
-
 
     const forSubmit = async (values, { resetForm }) => {
       try {
         const formData = new FormData();
         Object.entries(values).forEach(([key, value]) => {
-          if (key !== 'itemImageUrl') {
+          if (key !== 'itemImageUrl' && key !== 'itemVideoUrl') {
             formData.append(key, value);
           }
         });
@@ -68,21 +69,26 @@ function AddItems({editItem}){
           formData.append('itemImage', values.itemImageUrl);
         }
     
+        // Append the video file to the FormData if it exists
+        if (values.itemVideoUrl) {
+          formData.append('itemVideo', values.itemVideoUrl);
+        }
+    
         if (editItem) {
-           await axiosInstance.put(`/item/${editItem?.itemCode}`, formData, {
-              headers: {
-                  'Content-Type': 'multipart/form-data'
-              }
-           });
-           emitInfoToast("Updated Item Successfully");
-         } else {
-           await axiosInstance.post("/item", formData, {
-              headers: {
-                  'Content-Type': 'multipart/form-data'
-              }
-           });
-           emitSuccessToast("Added Item Successfully");
-         }
+          await axiosInstance.put(`/item/${editItem?.itemCode}`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+          emitInfoToast("Updated Item Successfully");
+        } else {
+          await axiosInstance.post("/item", formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+          emitSuccessToast("Added Item Successfully");
+        }
         navigate("/admin/item-dashboard");
         // Reset the form after successful submission
         resetForm();
@@ -91,6 +97,7 @@ function AddItems({editItem}){
         emitErrorToast("Error Adding Item");
       }
     };
+    
 
     return (
         <>
@@ -121,7 +128,7 @@ function AddItems({editItem}){
                           <img
                             src={empty1}
                             alt="Blank Image"
-                            style={{ width: "320px", height: "300px", marginTop: "10px" }}
+                            style={{ width: "300px", height: "280px", marginTop: "10px" }}
                           />
                         )}
                           <div style={{marginLeft:"100px"}}>
@@ -129,41 +136,27 @@ function AddItems({editItem}){
                           </div>
                         </div>
 
-                        <div className="form-group row mb-3 " style={{ width: "100%" }}>
+                        <div className="form-group row mb-1 " style={{ width: "100%" }}>
                     
-                          <input style={{ marginLeft: "60px" }} className="form-control form-control-sm w-75" type="file" id="formFile" onChange={handleImageChange} />              
+                          <input style={{ marginLeft: "60px", marginBottom:"5px", width:"355px" }} className="form-control form-control-sm" type="file" id="formFile" onChange={handleImageChange} />              
                         </div>
+
+
+                        
                           
-                          <div style={{marginLeft:"70px", marginBottom:"15px"}}>
-                          {/* {selectedImageUrl ? ( */}
-                            {/* <ThreeSixty
-                              amount={36}
-                              imagePath="https://iconasys.com/Downloads/360/360-jewelry-photography-earring-set-2/iframe.html"
-                              fileName="360_{index}.jpg?v1"
-                              style={{ width: "320px", height: "300px", marginTop: "10px" }}
-                              title="360 Image"
-                            /> */}
-                          {/* ) : (
-                            <img
-                              src={empty1}
-                              alt="Blank Image"
-                              style={{ width: "320px", height: "300px", marginTop: "10px" }}
-                            />
-                          )} */}
-                          <div style={{ marginLeft: "90px" }}>
-                            <p><b>360° Image Preview</b></p>
+                        <div style={{ width:"490px", marginLeft:"47px", marginBottom:"15px", marginTop:"10px"}}>
+                      
+                          <div className="VideoInput" style={{ width:"360px", height:"300px"}}>
+                          {source ? (
+                            <video className="mt-1" width="100%" controls src={source} />
+                          ) : (
+                            <img src={empty1} alt="Empty Image" style={{ marginTop:"70px", width: "300px", height: "300px" }} />
+                          )}
+                            <div className="VideoInput_footer" style={{width:"90%", marginTop:"5px"}}>{source ? "360° video Preview" : "Select your Item Video"}</div>
+                            <input ref={inputRef} className="form-control form-control-sm mt-3 mb-2" type="file" onChange={handleFileChange} accept=".mov,.mp4"/>          
                           </div>
                         </div>
 
-                        <div className="form-group row mb-3 " style={{ width: "100%" }}>
-                          <input
-                            style={{ marginLeft: "60px" }}
-                            className="form-control form-control-sm w-75"
-                            type="file"
-                            id="formFile360"
-                            onChange={handleImageChange1}
-                          />
-                        </div>
                       </div>
                         
                     {/* Rigth Side of the form */}
