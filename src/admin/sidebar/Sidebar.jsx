@@ -44,40 +44,40 @@ function Sidebar(){
       }, []);
 
       const [currentGoldPrice, setCurrentGoldPrice] = useState(null);
-  const [currentGoldPriceGm, setCurrentGoldPriceGm] = useState(null);
-  const [currentSilverPrice, setCurrentSilverPrice] = useState(null);
-  const [currentSilverPriceGm, setCurrentSilverPriceGm] = useState(null);
-  const [currentPriceDate, setCurrentPriceDate] = useState(null);
+      const [currentGoldPriceGm, setCurrentGoldPriceGm] = useState(null);
+      const [currentSilverPrice, setCurrentSilverPrice] = useState(null);
+      const [currentSilverPriceGm, setCurrentSilverPriceGm] = useState(null);
+      const [currentPriceDate, setCurrentPriceDate] = useState(null);
 
-  useEffect(() => {
-    // Fetch current metal prices when the component mounts
-    getCurrentPrices();
-  }, []);
+      useEffect(() => {
+        // Fetch current metal prices when the component mounts
+        getCurrentPrices();
+      }, []);
 
-  const getCurrentPrices = async () => {
-    try {
-      // Fetch current metal prices from your API
-      const response = await getCurrentMetalPrice();
-  
-      // Check if the response was successful
-      if (response.data.success) {
-        // Extract gold and silver prices from the response
-        const { goldTola, gold10gm, silverTola, silver10gm, priceDate } = response.data.response;
-  
-        // Update state with the extracted prices
-        setCurrentGoldPrice(goldTola);
-        setCurrentGoldPriceGm(gold10gm);
-        setCurrentSilverPrice(silverTola);
-        setCurrentSilverPriceGm(silver10gm);
-        setCurrentPriceDate(priceDate);
-      } else {
-        // Handle API error if needed
-        console.error('Error fetching current metal prices:', response.data.message);
-      }
-    } catch (error) {
-      console.error('Error fetching current metal prices:', error);
-    }
-  };
+      const getCurrentPrices = async () => {
+        try {
+          // Fetch current metal prices from your API
+          const response = await getCurrentMetalPrice();
+      
+          // Check if the response was successful
+          if (response.data.success) {
+            // Extract gold and silver prices from the response
+            const { goldTola, gold10gm, silverTola, silver10gm, priceDate } = response.data.response;
+      
+            // Update state with the extracted prices
+            setCurrentGoldPrice(goldTola);
+            setCurrentGoldPriceGm(gold10gm);
+            setCurrentSilverPrice(silverTola);
+            setCurrentSilverPriceGm(silver10gm);
+            setCurrentPriceDate(priceDate);
+          } else {
+            // Handle API error if needed
+            console.error('Error fetching current metal prices:', response.data.message);
+          }
+        } catch (error) {
+          console.error('Error fetching current metal prices:', error);
+        }
+      };
 
   const formatPrice = (priceString) => {
     if (priceString) {

@@ -1,21 +1,18 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import { getCurrentMetalPrice } from "../../../services/PriceInstance";
+import { emitInfoToast } from "../Toast/EmitToast";
 
 function Navbar() {
-
+  const location = useLocation();
   const navigate = useNavigate();
 
   // State to manage the navbar's openness
   const [isOpen, setIsOpen] = useState(false);
 
-  // const [user, setUser] = useState(
-  //   JSON.parse(localStorage.getItem("user")) || ""
-  // );
-
-  // Function to toggle the navbar's openness
-  const toggle = () => setIsOpen(!isOpen);
+  // State to store user information
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("userProfile")) || "");
 
   const [currentGoldPrice, setCurrentGoldPrice] = useState(null);
   const [currentGoldPriceGm, setCurrentGoldPriceGm] = useState(null);
@@ -28,16 +25,24 @@ function Navbar() {
     getCurrentPrices();
   }, []);
 
+  useEffect(() => {
+    // Check if user data exists in local storage
+    const userProfile = JSON.parse(localStorage.getItem("userProfile"));
+    if (userProfile) {
+      setUser(userProfile);
+    }
+  }, []);
+
   const getCurrentPrices = async () => {
     try {
       // Fetch current metal prices from your API
       const response = await getCurrentMetalPrice();
-  
+
       // Check if the response was successful
       if (response.data.success) {
         // Extract gold and silver prices from the response
         const { goldTola, gold10gm, silverTola, silver10gm, priceDate } = response.data.response;
-  
+
         // Update state with the extracted prices
         setCurrentGoldPrice(goldTola);
         setCurrentGoldPriceGm(gold10gm);
@@ -54,7 +59,7 @@ function Navbar() {
   };
 
   const formatPrice = (priceString) => {
-    const price = parseFloat(priceString.replace(/[^0-9.-]+/g,"")); // Remove non-numeric characters and convert to number
+    const price = parseFloat(priceString.replace(/[^0-9.-]+/g, "")); // Remove non-numeric characters and convert to number
     return price.toLocaleString('en-IN');
   };
 
@@ -63,7 +68,7 @@ function Navbar() {
     const day = date.getDate();
     const month = date.toLocaleString('default', { month: 'long' });
     const year = date.getFullYear();
-  
+
     // Function to add the appropriate suffix to the day
     const addSuffix = (day) => {
       if (day >= 11 && day <= 13) {
@@ -76,26 +81,33 @@ function Navbar() {
         default: return day + 'th';
       }
     };
-  
+
     return addSuffix(day) + ' ' + month + ', ' + year;
   };
 
-  return(
+  const handleLogout = () => {
+    // Perform logout actions, such as clearing user data from localStorage and state
+    localStorage.removeItem("userProfile");
+    setUser("");
+    navigate("/"); // Redirect to the login page after logout
+    emitInfoToast("Logged Out Successfully")
+  };
+
+  return (
     <div>
       <div className="topbar">
-        <h4>    
+        <h4>
           <div className="logo">
-            <div className="icon">          
+            <div className="icon">
               <ion-icon name="diamond-outline"></ion-icon>
             </div>
-
             <b className="name"> JewelHub</b>
           </div>
         </h4>
 
         <div className="rate10">
           {currentPriceDate && <div>
-            <div style={{width:"300px", marginLeft:"-90px"}} className="dropdown123">
+            <div style={{ width: "300px", marginLeft: "-90px" }} className="dropdown123">
               <span><b>Date</b> : {formatDate(currentPriceDate)}</span>
               <div className="dropdown123-content">
                 <p>Latest Date of the price is </p>
@@ -103,7 +115,7 @@ function Navbar() {
               </div>
             </div>
           </div>}
-          
+
 
           {currentGoldPrice && <div>
             <div className="dropdown123">
@@ -115,10 +127,10 @@ function Navbar() {
             </div>
           </div>}
 
-          {currentSilverPrice && <div>     
+          {currentSilverPrice && <div>
             <div className="dropdown123">
               <span><b>Silver</b> : NRs {formatPrice(currentSilverPrice)}</span>
-              <div className="dropdown123-content" style={{paddingRight:"30px"}}>
+              <div className="dropdown123-content" style={{ paddingRight: "30px" }}>
                 <p><b>Silver Per Tola</b> : NRs {formatPrice(currentSilverPrice)}</p>
                 <p><b>Silver 10 gm</b> : NRs {formatPrice(currentSilverPriceGm)}</p>
               </div>
@@ -127,7 +139,7 @@ function Navbar() {
 
         </div>
       </div>
-  
+
       <div className="navclass">
         <nav className="navbar1 navbar-expand-lg navbar-light">
           <button
@@ -138,7 +150,7 @@ function Navbar() {
             aria-controls="navbarSupportedContent"
             aria-expanded={isOpen ? "true" : "false"}
             aria-label="Toggle navigation"
-            onClick={toggle} // Toggle the navbar on button click
+            onClick={() => setIsOpen(!isOpen)} // Toggle the navbar on button click
           >
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -146,8 +158,8 @@ function Navbar() {
             className={`collapse navbar-collapse ${isOpen ? "show" : ""}`}
             id="navbarSupportedContent"
           >
-          
-          {/* Navbar Links */}
+
+            {/* Navbar Links */}
             <ul className="navbar-nav mr-auto">
               <li className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}>
                 <Link to={"/"} className="nav-link">
@@ -160,23 +172,45 @@ function Navbar() {
                   <span className="link-text">Products</span>
                 </Link>
               </li>
+            
+              {user ? (
+                <>
+                 <li className={`nav-item ${location.pathname === '/about' ? 'active' : ''}`}>
+                  <Link to={"/booking"} className="nav-link">
+                    <span className="link-text">Booking</span>
+                  </Link>
+                </li>
 
-              <li className="nav-item">
-                <a className="nav-link disabled" href="#">Cart</a>
-              </li>
+                <li className={`nav-item ${location.pathname === '/profile' ? 'active' : ''}`}>
+                  <Link to={"/profile"} className="nav-link">
+                    <span className="link-text">Profile</span>
+                  </Link>
+                </li>
+         
 
-              <li className={`nav-item ${location.pathname === '/login' ? 'active' : ''}`}>
-                <Link to={"/login"} className="nav-link">
-                  <span className="link-text">Login</span>
-                </Link>
-              </li>
+                <li className="nav-item">
+                  <Link to={"/"} className="nav-link">
+                    <span className="link-text"onClick={handleLogout}>Logout</span>
+                  </Link>
+                </li>
+                </>
+              ) : (
+                <>
+                <li className={`nav-item ${location.pathname === '/about' ? 'active' : ''}`}>
+                  <Link to={"/booking"} className="nav-link">
+                    <span className="link-text">About Us</span>
+                  </Link>
+                </li>
+        
+                <li className={`nav-item ${location.pathname === '/login' ? 'active' : ''}`}>
+                  <Link to={"/login"} className="nav-link">
+                    <span className="link-text">Login</span>
+                  </Link>
+                </li>
+                </>
+                )}
+            
 
-              <li className={`nav-item ${location.pathname === '/profile' ? 'active' : ''}`}>
-                <Link to={"/profile"} className="nav-link">
-                  <span className="link-text">Profile</span>
-                </Link>
-              </li>
-              
             </ul>
           </div>
         </nav>

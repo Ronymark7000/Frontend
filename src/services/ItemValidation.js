@@ -25,11 +25,10 @@ export const ItemSchema = Yup.object().shape({
   .required("Enter the Net Weight of the product!!! "), 
 
   goldPrice: Yup.string()
-  .min(0.1, "Gold Price must be at least 0.1")
-  .required("Enter the Gold Price of the product!!! "), 
+  .min(1, "Material's Price must be at least 1")
+  .required("Enter the Material's Price of the product!!! "), 
 
   manufactureCost: Yup.string()
-  .min(1, "Manufacture Cost must be a min of 100 Nrs")
   .required("Enter the Manufacture Price of the product!!! "), 
 
   totalCost: Yup.string()
