@@ -17,7 +17,7 @@ import "./VideoInput/VideoInput.css";
 function AddItems({ editItem }) {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
+  const initialFormState = {
     itemName: "",
     material: "Gold",
     karat: "24",
@@ -31,7 +31,19 @@ function AddItems({ editItem }) {
     totalCost: "",
     itemImageUrl: "",
     itemVideoUrl: "",
-  });
+  };
+
+  const [form, setForm] = useState(initialFormState);
+
+  const resetForm = () => {
+    setForm(initialFormState);
+    // Optionally, you can also reset other state variables here
+  };
+
+  const handleCancel = () => {
+    resetForm();
+    // navigate("/admin/item-dashboard"); // Assuming you want to navigate to the item dashboard after canceling
+  };
 
   const [originalGoldPrice, setOriginalGoldPrice] = useState(""); // State to store original gold price
 
@@ -661,8 +673,9 @@ function AddItems({ editItem }) {
                         marginTop: "20px",
                         marginLeft: "15px",
                       }}
+                      onClick={handleCancel} // Attach the handleCancel function to the onClick event of the Cancel button
                     >
-                      Cancel
+                      Reset
                     </Button>
                   </div>
                 </div>

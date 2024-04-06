@@ -166,7 +166,7 @@ function Sidebar(){
                     </Link>
                   </li>
     
-                  <li>
+                  {/* <li>
                     <a href="#">
                       <span className="icon">
                         <ion-icon name="push-outline"></ion-icon>
@@ -182,7 +182,7 @@ function Sidebar(){
                       </span>
                       <span className="title">Remove Items</span>
                     </a>
-                  </li>
+                  </li> */}
     
                   <li>
                     <a href="#">
@@ -193,12 +193,21 @@ function Sidebar(){
                     </a>
                   </li>
     
-                  <li>
+                  {/* <li>
                     <a href="#">
                       <span className="icon">
                         <ion-icon name="search-circle-outline"></ion-icon>
                       </span>
                       <span className="title">Product Valuation</span>
+                    </a>
+                  </li> */}
+
+                  <li>
+                    <a href="#">
+                      <span className="icon">
+                      <ion-icon name="documents-outline"></ion-icon>
+                      </span>
+                      <span className="title">Orders</span>
                     </a>
                   </li>
     
@@ -210,13 +219,17 @@ function Sidebar(){
                       <span className="title">Customer Order</span>
                     </a>
                   </li>
+
+                  
+
+                  
     
                   <li>
                     <a href="#">
                       <span className="icon">
                         <ion-icon name="megaphone-outline"></ion-icon>
                       </span>
-                      <span className="title">Feedbacks</span>
+                      <span className="title">Customer Feedbacks</span>
                     </a>
                   </li>
     

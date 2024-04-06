@@ -1,4 +1,5 @@
-import GoldSilverChart from "../components/GoldSilverChart/GoldSilverChart";
+// import GoldSilverChart from "../components/GoldSilverChart/GoldSilverChart";
+import LineChart from "../components/GoldSilverChart/LineChart";
 import "./dashboard.css"
 
 const Dashboard = () => {
@@ -55,8 +56,8 @@ const Dashboard = () => {
 
       <div className="charts1">
         <div className="chart11">
-          <h2>Gold & Silver Rate</h2>
-    
+          <h2>Gold Market Trend Graph</h2>
+          <LineChart/>
         </div>
         <div className="chart11" id="doughnut-chart">
           <h2>Order Ratio</h2>
@@ -66,7 +67,7 @@ const Dashboard = () => {
         
       </div>
       
-      <GoldSilverChart/>
+     
     </>
   );
 }

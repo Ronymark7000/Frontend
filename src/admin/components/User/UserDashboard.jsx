@@ -8,7 +8,7 @@ import { emitInfoToast } from "../../../site/components/Toast/EmitToast";
 import "./User.css"
 import { Pagination, Dropdown, Button } from "react-bootstrap";
 import Popup from "../../../site/components/Popup/Popup"
-import AddUser from "./addUser";
+import AddUser from "./AddUser";
 
 const UserDashboard = () => {
   const navigate = useNavigate();

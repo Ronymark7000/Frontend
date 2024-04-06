@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../../axiosInstance";
-import AddUser from "./addUser";
+import AddUser from "./AddUser"
 
 
 function EditUser() {

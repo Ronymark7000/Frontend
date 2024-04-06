@@ -10,7 +10,7 @@ import Sidebar from "./admin/sidebar/Sidebar";
 import IsAdmin from "./authentication/IsAdmin";
 import Public from "./authentication/Public";
 import Confirmation from "./authentication/EmailVerify/Confirmation";
-import AddUser from "./admin/components/User/addUser";
+import AddUser from "./admin/components/User/AddUser";
 import UserDashboard from "./admin/components/User/UserDashboard";
 import EditUser from "./admin/components/User/EditUser";
 import ItemDashboard from "./admin/components/Items/ItemDashboard";
@@ -48,6 +48,7 @@ const AppRoutes = () => {
         >
           <Route path="nav" element={<Sidebar />} />
           <Route index element={<Dashboard />} />
+          
           <Route path="user-dashboard" element={<UserDashboard />} />
           <Route path="add-user" element={<AddUser />} />
           <Route path="edit-user/:id" element={<EditUser />} />
