@@ -234,12 +234,12 @@ function Sidebar(){
                   </li>
     
                   <li>
-                    <a href="#">
+                    <Link to={"/"}>
                       <span className="icon">
                         <ion-icon name="desktop-outline"></ion-icon>
                       </span>
                       <span className="title">Webpage</span>
-                    </a>
+                    </Link>
                   </li>
     
                   <li>

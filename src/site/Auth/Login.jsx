@@ -50,6 +50,7 @@ const Login = () => {
         const userRole = response?.data?.response?.role
         
         userRole === "Admin" ? navigate("/admin") : navigate("/");
+        window.location.reload();
         emitSuccessToast("Logged In Successfully");
         //Cookies.set("userToken", JSON.stringify(response?.response));
         

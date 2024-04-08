@@ -20,6 +20,7 @@ function AddItems({ editItem }) {
   const initialFormState = {
     itemName: "",
     material: "Gold",
+    category: "",
     karat: "24",
     grossWeight: "",
     wastage: "",
@@ -74,7 +75,7 @@ function AddItems({ editItem }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "itemName" || name === "description" || name === "material") {
+    if (name === "itemName" || name === "description" || name === "material" || name=="category") {
         // Preserve itemName, description, and material
         setForm(prevForm => ({ ...prevForm, [name]: value }));
     } else {
@@ -416,6 +417,43 @@ function AddItems({ editItem }) {
                   >
                     <label
                       className="col-sm-4 col-form-label"
+                      htmlFor="exampleInputCategory"
+                    >
+                      <b>Category</b>
+                    </label>
+                    <div className="col-sm-8">
+                      <Field
+                        className="form-control"
+                        name="category"
+                        placeholder="--Select Category--"
+                        as="select"
+                        value={form.categroy}
+                        onChange={handleInputChange}
+                      >
+                        <option disabled selected>--Select Category--</option>
+                        <option>Ring</option>
+                        <option>Necklace</option>
+                        <option>Ear Ring</option>
+                        <option>Pendant</option>
+                        <option>Jewel Set</option>
+                        <option>Diamonds</option>
+                        <option>Bangles</option>
+                        <option>Others</option>
+                      </Field>
+                      {errors.category && touched.category ? (
+                        <div className="text-danger blockquote-footer mt-1">
+                          {errors.category}
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
+
+                  <div
+                    className="form-group row mb-3 justify-content-center"
+                    style={{ width: "100%" }}
+                  >
+                    <label
+                      className="col-sm-4 col-form-label"
                       htmlFor="exampleInputGrossWeight"
                     >
                       <b>Gross Weight</b>
@@ -566,6 +604,11 @@ function AddItems({ editItem }) {
                         value={form.costOfStone}
                         onChange={handleInputChange}
                       />
+                        {errors.costOfStone && touched.costOfStone ? (
+                        <div className="text-danger blockquote-footer mt-1">
+                          {errors.costOfStone}
+                        </div>
+                      ) : null}
                     </div>
                   </div>
 

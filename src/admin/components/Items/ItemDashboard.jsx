@@ -9,11 +9,12 @@ import { getCurrentMetalPrice } from "../../../services/PriceInstance";
 
 const ItemDashboard = () => {
     const navigate = useNavigate();
-    const [currentGoldPrice, setCurrentGoldPrice] = useState(null);
+   
     const [searchQuery, setSearchQuery] = useState(""); // State for search query
     const [activePage, setActivePage] = useState(1); // State for active page
-    const [itemsPerPage, setItemsPerPage] = useState(10); // State for items per page
+    const [itemsPerPage, setItemsPerPage] = useState(4); // State for items per page
   
+    const [currentGoldPrice, setCurrentGoldPrice] = useState(null);
     const { data: itemData, isLoading: itemLoading, refetch: itemRefetch } = useQuery({
         queryKey: ["ItemInstance"],
         queryFn: () => getItems(),
@@ -152,7 +153,7 @@ const ItemDashboard = () => {
           },
           {
             accessorKey: "itemImageUrl",
-            header: "Image",
+            header: <div style={{ marginLeft: "30px" }}>Image</div>,
             cell: ({ getValue }) => {
                 const [imageUrl, setImageUrl] = useState(null);
         
@@ -176,8 +177,10 @@ const ItemDashboard = () => {
                         {imageUrl && (
                             <img
                                 src={imageUrl}
+                                // src={`http://localhost:8081/${imageUrl}`}
+                                // src= `http://localhost8081/static/${imageUrl}`
                                 alt="Item"
-                                style={{ minWidth: "90px", minHeight: "90px" }}
+                                style={{ maxWidth: "100px", maxHeight: "100px" }}
                             />
                         )}
                     </div>
@@ -276,10 +279,10 @@ const ItemDashboard = () => {
                             {itemsPerPage}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => handleItemsPerPageChange(1)}>5</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleItemsPerPageChange(2)}>10</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleItemsPerPageChange(15)}>15</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleItemsPerPageChange(20)}>20</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(4)}>4</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(8)}>8</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(10)}>10</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(15)}>215</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>

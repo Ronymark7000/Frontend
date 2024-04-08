@@ -167,15 +167,15 @@ function Navbar() {
                 </Link>
               </li>
 
-              <li className={`nav-item ${location.pathname === '/items' ? 'active' : ''}`}>
-                <Link to={"/items"} className="nav-link">
+              <li className={`nav-item ${location.pathname === '/product' ? 'active' : ''}`}>
+                <Link to={"/product"} className="nav-link">
                   <span className="link-text">Products</span>
                 </Link>
               </li>
             
               {user ? (
                 <>
-                 <li className={`nav-item ${location.pathname === '/about' ? 'active' : ''}`}>
+                 <li className={`nav-item ${location.pathname === '/booking' ? 'active' : ''}`}>
                   <Link to={"/booking"} className="nav-link">
                     <span className="link-text">Booking</span>
                   </Link>
@@ -196,8 +196,8 @@ function Navbar() {
                 </>
               ) : (
                 <>
-                <li className={`nav-item ${location.pathname === '/about' ? 'active' : ''}`}>
-                  <Link to={"/booking"} className="nav-link">
+                <li className={`nav-item ${location.pathname === '/aboutus' ? 'active' : ''}`}>
+                  <Link to={"/aboutus"} className="nav-link">
                     <span className="link-text">About Us</span>
                   </Link>
                 </li>

@@ -16,6 +16,7 @@ import EditUser from "./admin/components/User/EditUser";
 import ItemDashboard from "./admin/components/Items/ItemDashboard";
 import AddItems from "./admin/components/Items/AddItems";
 import UpdateItem from "./admin/components/Items/UpdateItem";
+import Item from "./site/OtherPages/ProductPage/Item";
 
 
 const AppRoutes = () => {
@@ -27,6 +28,7 @@ const AppRoutes = () => {
         <Route path="/" element={<SiteLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/api/auth/confirm-account" element={<Confirmation/>} />
+        <Route path="/product" element={<Item/>}/>
 
           {/* For Public Route only */}
         <Route path="login" element={
