@@ -15,6 +15,10 @@ function Footer() {
                     - both traditional and modern designs, 
                     located here at center of Kathmandu. 
                     </p>
+                    <br/>
+                    <p>
+                    <b>Note:</b> The price of Gold & Silver always updates at 11:15 AM.
+                    </p>
                 </div>
 
                 <div className="links">

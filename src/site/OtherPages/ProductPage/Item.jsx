@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { Dropdown, Pagination } from "react-bootstrap";
 import { Button, Card, CardBody, CardText, CardTitle } from "reactstrap";
 import { getPublicItems } from "../../../services/ItemInstance";
 import { getCurrentMetalPrice } from "../../../services/PriceInstance";
@@ -12,6 +13,9 @@ function Item() {
     const [selectedPriceRange, setSelectedPriceRange] = useState("all"); // Default to show all items
     const [selectedCategory, setSelectedCategory] = useState("all"); // Default to show all categories
     const [selectedKarat, setSelectedKarat] = useState("all"); // Default to show all karats
+    const [searchQuery, setSearchQuery] = useState("");
+    const [itemsPerPage, setItemsPerPage] = useState(8);
+    const [activePage, setActivePage] = useState(1);
 
     useEffect(() => {
         // Check if userProfile exists in localStorage
@@ -82,20 +86,55 @@ function Item() {
     };
 
     // Filter items based on selected price range, category, and karat
-    const filteredItems = items.filter(item => {
-        const totalCost = calculateTotalCost(item);
-        const itemCategory = selectedCategory === "all" ? true : item.category === selectedCategory;
-        const itemKarat = selectedKarat === "all" ? true : item.karat === parseInt(selectedKarat);
-        const itemPrice = selectedPriceRange === "all" ? true : (
-            (selectedPriceRange === "1k to 50k" && totalCost >= 1000 && totalCost <= 49999) ||
-            (selectedPriceRange === "50k to 100k" && totalCost >= 50000 && totalCost <= 99999) ||
-            (selectedPriceRange === "100k to 200k" && totalCost >= 100000 && totalCost <= 199999) ||
-            (selectedPriceRange === "200k to 500k" && totalCost >= 200000 && totalCost <= 499999) ||
-            (selectedPriceRange === "500k plus" && totalCost >= 500000)
-        );
+    const filteredItems = useMemo(() => {
+        const filteredData = items.filter(item => {
+            const totalCost = calculateTotalCost(item);
+            const itemCategory = selectedCategory === "all" ? true : item.category === selectedCategory;
+            const itemKarat = selectedKarat === "all" ? true : item.karat === parseInt(selectedKarat);
+            const itemPrice = selectedPriceRange === "all" ? true : (
+                (selectedPriceRange === "1k to 50k" && totalCost >= 1000 && totalCost <= 49999) ||
+                (selectedPriceRange === "50k to 100k" && totalCost >= 50000 && totalCost <= 99999) ||
+                (selectedPriceRange === "100k to 200k" && totalCost >= 100000 && totalCost <= 199999) ||
+                (selectedPriceRange === "200k to 500k" && totalCost >= 200000 && totalCost <= 499999) ||
+                (selectedPriceRange === "500k plus" && totalCost >= 500000)
+            );
 
-        return itemCategory && itemKarat && itemPrice;
-    });
+            return itemCategory && itemKarat && itemPrice;
+        });
+
+        if (!searchQuery) return filteredData;
+
+        return filteredData.filter((item) => {
+            return (
+                item.itemName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.material.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.karat.toString().toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        });
+    }, [items, selectedCategory, selectedKarat, selectedPriceRange, searchQuery]);
+
+    const paginatedItems = useMemo(() => {
+        const startIndex = (activePage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return filteredItems.slice(startIndex, endIndex);
+    }, [filteredItems, activePage, itemsPerPage]);
+    
+
+    const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+
+    const handleSearchInputChange = (event) => {
+        setSearchQuery(event.target.value);
+        setActivePage(1);
+    };
+
+    const handlePageChange = (pageNumber) => {
+        setActivePage(pageNumber);
+    };
+
+    const handleItemsPerPageChange = (items) => {
+        setItemsPerPage(items);
+        setActivePage(1); // Reset activePage when items per page changes
+    };
 
     return (
         <div style={{ minHeight: "75vh" }}>
@@ -104,6 +143,30 @@ function Item() {
             </div>
 
             <div className="d-flex justify-content-end" style={{ backgroundColor: "#f9f9f9", paddingBottom: "5px", paddingRight: "15px" }}>
+                <div className="d-flex justify-content-start " style={{  marginRight: "670px"}}>
+                    <span style={{ marginTop:"5px" }}><b style={{ color: "#62605A"}}>Items Per Page :</b></span>
+                    <Dropdown className="ml-2" >
+                        <Dropdown.Toggle variant="light" id="dropdown-basic" style={{marginLeft:"5px", width: "60px" }}>
+                            {itemsPerPage}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(4)}>4</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(8)}>8</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(12)}>12</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(16)}>16</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+
+                    <div className="searchbar mb-2 w-25" style={{left:"17%"}}>
+                    <label className="d-flex">
+                        <input type="text" style={{backgroundColor:"#ebebeb"}} placeholder="Search item name here ..." value={searchQuery} onChange={handleSearchInputChange} />
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                    </div>
+                </div>
+
+               
+
                 <div style={{ paddingTop: "5px" }}> Category :</div>
                 <div>
                     <div className="col-sm-12 d-flex justify-content-center align-items-center">
@@ -154,15 +217,15 @@ function Item() {
             </div>
 
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-            {filteredItems.length > 0 ? (
-                filteredItems.map((item, index) => (
+            {paginatedItems.length > 0 ? (
+                    paginatedItems.map((item, index) => (
                     <div key={index} className="col">
                         <div style={{ marginRight: "5px", marginLeft: "1px", right: "10px" }}>
                             <Card style={{ width: "18rem", minHeight: "62vh", backgroundColor: "#f9f9f9" }}>
                                 <img alt={item.itemName} src={item.itemImageUrl} style={{ width: "270px", height: "320px", left: "10px", marginLeft: "10px", marginTop: "10px" }} />
                                 <CardBody>
                                     <CardTitle tag="h5" style={{ fontSize: "bolder" }}>{item.itemName}</CardTitle>
-                                    <CardText> <b>Price</b>: {currentGoldPrice ? `Nrs ${calculateTotalCost(item).toLocaleString()}` : 'Loading...'}</CardText>
+                                    <CardText> <b>Price</b>: {currentGoldPrice ? `Nrs ${calculateTotalCost(item).toLocaleString()}` : 'Price Loading...'}</CardText>
                                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                                     
                                     {userLoggedIn ? (
@@ -182,8 +245,11 @@ function Item() {
                                     </div>
                                 </CardBody>
                             </Card>
+                            
                         </div>
+                        
                     </div>
+                    
                 ))
             ) : (
                 // Display "No items found" message
@@ -192,6 +258,21 @@ function Item() {
                     <p className="text-center" style={{fontSize:"36px"}}>No items found</p>
                 </div>
                 )}
+            </div>
+            <div className="d-flex flex-column align-items-center"> 
+                <div className="mt-3">
+                    <Pagination>
+                        <Pagination.First onClick={() => handlePageChange(1)} />
+                        <Pagination.Prev onClick={() => handlePageChange(activePage - 1)} disabled={activePage === 1} />
+                        {[...Array(totalPages).keys()].map((page) => (
+                            <Pagination.Item key={page + 1} active={page + 1 === activePage} onClick={() => handlePageChange(page + 1)}>
+                            {page + 1}
+                            </Pagination.Item>
+                        ))}
+                        <Pagination.Next onClick={() => handlePageChange(activePage + 1)} disabled={activePage === totalPages} />
+                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+                    </Pagination>
+                </div>
             </div>
         </div>    
     );
