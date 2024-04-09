@@ -6,10 +6,12 @@ import img4 from "../../../assets/Category/Pendant.png";
 import { Link } from "react-router-dom";
 
 function Cards() {
+
 return (
     <>
     <div className="container">
-        <Link to={"/product"}>
+        {/* <Link to={"/product"}> */}
+        <Link to={`/product?category=Ring`}>
             <div className="card">
                 <img src={img1} alt="Rings"/>
                 <div className="intro" style={{color:"white"}}>
@@ -19,7 +21,7 @@ return (
             </div>
         </Link>
 
-        <Link to={"/product"}>
+        <Link to={`/product?category=Necklace`}>
             <div className="card">
                 <img src={img2} alt="Necklace"/>
                 <div className="intro" style={{color:"white"}}>
@@ -29,7 +31,7 @@ return (
             </div>
         </Link>
 
-        <Link to={"/product"}>
+        <Link to={`/product?category=Ear Ring`}>
             <div className="card">
                 <img src={img3} alt="Ear Rings"/>
                 <div className="intro" style={{color:"white"}}>
@@ -40,7 +42,7 @@ return (
         </Link>
 
 
-        <Link to={"/product"}>
+        <Link to={`/product?category=Pendant`}>
         <div className="card">
             <img src={img4} alt="Pendant"/>
             <div className="intro" style={{color:"white"}}>

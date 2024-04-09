@@ -17,6 +17,9 @@ import ItemDashboard from "./admin/components/Items/ItemDashboard";
 import AddItems from "./admin/components/Items/AddItems";
 import UpdateItem from "./admin/components/Items/UpdateItem";
 import Item from "./site/OtherPages/ProductPage/Item";
+import ItemDetails from "./site/OtherPages/ProductPage/ItemDetailPage";
+import Inventory from "./admin/components/Inventory/Inventory";
+import InventoryView from "./admin/components/Inventory/InventoryView";
 
 
 const AppRoutes = () => {
@@ -29,6 +32,7 @@ const AppRoutes = () => {
         <Route index element={<HomePage />} />
         <Route path="/api/auth/confirm-account" element={<Confirmation/>} />
         <Route path="/product" element={<Item/>}/>
+        <Route path="/product/:itemCode" element={<ItemDetails/>}/>
 
           {/* For Public Route only */}
         <Route path="login" element={
@@ -58,6 +62,9 @@ const AppRoutes = () => {
           <Route path="item-dashboard" element={<ItemDashboard />} />
           <Route path="add-item" element={<AddItems />} />
           <Route path="edit-item/:itemCode" element={<UpdateItem />} />
+
+          <Route path="inventory" element={<Inventory/>} />
+          <Route path="inventory/:itemCode" element={<InventoryView/>}/>
 
        
         </Route>

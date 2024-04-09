@@ -1,23 +1,25 @@
 import { useEffect, useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Dropdown, Pagination } from "react-bootstrap";
 import { Button, Card, CardBody, CardText, CardTitle } from "reactstrap";
 import { getPublicItems } from "../../../services/ItemInstance";
 import { getCurrentMetalPrice } from "../../../services/PriceInstance";
 import NoSuchData from "../../../assets/NoItemFound.svg";
 
-function Item() {
+function Item({item}) {
     const [items, setItems] = useState([]);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
     const [currentGoldPrice, setCurrentGoldPrice] = useState(null);
     const [userLoggedIn, setUserLoggedIn] = useState(false);
     const [selectedPriceRange, setSelectedPriceRange] = useState("all"); // Default to show all items
-    const [selectedCategory, setSelectedCategory] = useState("all"); // Default to show all categories
+    const [selectedCategory, setSelectedCategory] = useState(queryParams.get("category") || "all"); // Default to show all categories
     const [selectedKarat, setSelectedKarat] = useState("all"); // Default to show all karats
     const [searchQuery, setSearchQuery] = useState("");
     const [itemsPerPage, setItemsPerPage] = useState(8);
     const [activePage, setActivePage] = useState(1);
 
-    useEffect(() => {
+    useEffect(() => {   
         // Check if userProfile exists in localStorage
         const userProfile = localStorage.getItem('userProfile');
         if (userProfile) {
@@ -25,6 +27,10 @@ function Item() {
         }
     }, []);
 
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top of the page on component mount
+    }, []);
+    
     useEffect(() => {
         const fetchItems = async () => {
             try {
@@ -62,7 +68,11 @@ function Item() {
 
     const calculateTotalCost = (item) => {
         const { netWeight, manufactureCost, costOfStone, karat } = item;
-        let goldPriceInt = parseInt(currentGoldPrice.replace("Rs", ""));
+        let goldPriceInt = 0;
+
+    if (currentGoldPrice) {
+        goldPriceInt = parseInt(currentGoldPrice.replace("Rs", ""));
+    }
 
         // Adjust gold price based on the selected Karat
         if (karat === 24) {
@@ -86,32 +96,37 @@ function Item() {
     };
 
     // Filter items based on selected price range, category, and karat
-    const filteredItems = useMemo(() => {
-        const filteredData = items.filter(item => {
-            const totalCost = calculateTotalCost(item);
-            const itemCategory = selectedCategory === "all" ? true : item.category === selectedCategory;
-            const itemKarat = selectedKarat === "all" ? true : item.karat === parseInt(selectedKarat);
-            const itemPrice = selectedPriceRange === "all" ? true : (
-                (selectedPriceRange === "1k to 50k" && totalCost >= 1000 && totalCost <= 49999) ||
-                (selectedPriceRange === "50k to 100k" && totalCost >= 50000 && totalCost <= 99999) ||
-                (selectedPriceRange === "100k to 200k" && totalCost >= 100000 && totalCost <= 199999) ||
-                (selectedPriceRange === "200k to 500k" && totalCost >= 200000 && totalCost <= 499999) ||
-                (selectedPriceRange === "500k plus" && totalCost >= 500000)
-            );
+   // Filter items based on selected price range, category, and karat
+const filteredItems = useMemo(() => {
+    const filteredData = items.filter(item => {
+        const totalCost = calculateTotalCost(item);
+        
+        const itemKarat = selectedKarat === "all" ? true : item.karat === parseInt(selectedKarat);
+        const itemPrice = selectedPriceRange === "all" ? true : (
+            (selectedPriceRange === "1k to 50k" && totalCost >= 1000 && totalCost <= 49999) ||
+            (selectedPriceRange === "50k to 100k" && totalCost >= 50000 && totalCost <= 99999) ||
+            (selectedPriceRange === "100k to 200k" && totalCost >= 100000 && totalCost <= 199999) ||
+            (selectedPriceRange === "200k to 500k" && totalCost >= 200000 && totalCost <= 499999) ||
+            (selectedPriceRange === "500k plus" && totalCost >= 500000)
+        );
 
-            return itemCategory && itemKarat && itemPrice;
-        });
+        // Include selected category filtering logic
+        const itemCategory = selectedCategory === "all" ? true : item.category === selectedCategory;
 
-        if (!searchQuery) return filteredData;
+        return itemPrice && itemKarat && itemCategory; // Adjust the order if necessary
+    });
 
-        return filteredData.filter((item) => {
-            return (
-                item.itemName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                item.material.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                item.karat.toString().toLowerCase().includes(searchQuery.toLowerCase())
-            );
-        });
-    }, [items, selectedCategory, selectedKarat, selectedPriceRange, searchQuery]);
+    if (!searchQuery) return filteredData;
+
+    return filteredData.filter((item) => {
+        return (
+            item.itemName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.material.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.karat.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    });
+}, [items, selectedCategory, selectedKarat, selectedPriceRange, searchQuery]);
+
 
     const paginatedItems = useMemo(() => {
         const startIndex = (activePage - 1) * itemsPerPage;
@@ -170,17 +185,18 @@ function Item() {
                 <div style={{ paddingTop: "5px" }}> Category :</div>
                 <div>
                     <div className="col-sm-12 d-flex justify-content-center align-items-center">
-                        <select className="form-control" style={{ backgroundColor: "#ebebeb", marginLeft: "4px" }} name="category" onChange={(e) => setSelectedCategory(e.target.value)}>
-                            <option value="all">All</option>
-                            <option value="Ring">Ring</option>
-                            <option value="Necklace">Necklace</option>
-                            <option value="EarRing">Ear Ring</option>
-                            <option value="Pendant">Pendant</option>
-                            <option value="JewelSet">Jewel Set</option>
-                            <option value="Diamonds">Diamonds</option>
-                            <option value="Bangles">Bangles</option>
-                            <option value="Others">Others</option>
-                        </select>
+                    <select className="form-control" style={{ backgroundColor: "#ebebeb", marginLeft: "4px" }} name="category" onChange={(e) => setSelectedCategory(e.target.value)} value={selectedCategory}>
+                        <option value="all">All</option>
+                        <option value="Ring">Ring</option>
+                        <option value="Necklace">Necklace</option>
+                        <option value="Ear Ring">Ear Ring</option>
+                        <option value="Pendant">Pendant</option>
+                        <option value="JewelSet">Jewel Set</option>
+                        <option value="Diamonds">Diamonds</option>
+                        <option value="Bangles">Bangles</option>
+                        <option value="Others">Others</option>
+                    </select>
+
                     </div>
                 </div>
 
@@ -230,7 +246,7 @@ function Item() {
                                     
                                     {userLoggedIn ? (
                                         <>
-                                        <Link to="#">
+                                        <Link to={`/product/${item.itemCode}` }>
                                             <Button style={{ background: "#2192FF", fontSize: "0.875rem", height: "40px", width: "120px" }}>Quick Details</Button>
                                         </Link>
                                         <Link to="#">
@@ -238,7 +254,7 @@ function Item() {
                                         </Link>
                                         </>
                                     ) : (
-                                        <Link to="#">
+                                        <Link to={`/product/${item.itemCode}` }>
                                         <Button style={{ background: "#2192FF", fontSize: "0.875rem", height: "40px", width: "250px" }}>View Details</Button>
                                     </Link>
                                 )}

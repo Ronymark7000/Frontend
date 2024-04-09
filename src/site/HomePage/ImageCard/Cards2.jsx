@@ -8,7 +8,7 @@ function Cards2() {
 return (
     <>
     <div className="container">
-        <Link to={"/product"}>
+    <Link to={`/product?category=JewelSet`}>
             <div className="card">
                 <img src={img5} className="img2" alt="Rings"/>
                 <div className="intro2" style={{color:"white"}}>
@@ -18,7 +18,7 @@ return (
             </div>
         </Link>
 
-        <Link to={"/product"}>
+        <Link to={`/product?category=Diamonds`}>
             <div className="card">
                 <img src={img6} className="img2" alt="Diamond"/>
                 <div className="intro2" style={{color:"white"}}>
@@ -28,9 +28,9 @@ return (
             </div>
         </Link>
 
-        <Link to={"/product"}>
+        <Link to={`/product?category=Bangles`}>
             <div className="card">
-                <img src={img7} className="img2" alt="Ear Rings"/>
+                <img src={img7} className="img2" alt="Bangles"/>
                 <div className="intro2" style={{color:"white"}}>
                     <h1 style={{margin:'10px', fontSize:'28px'}}>Bangles</h1>
                     <p style={{color:'white', fontSize: '14px', marginLeft: '5px', marginRight: '8px'}}>Adorn Your Wrists: Discover our stunning collection of bangles, crafted to accentuate your grace and style.</p>

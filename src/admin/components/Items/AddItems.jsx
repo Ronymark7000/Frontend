@@ -247,14 +247,7 @@ function AddItems({ editItem }) {
           {({ errors, touched }) => (
             <Form style={{ width: "100%" }}>
               <div>
-                <Label
-                  for="exampleAbc"
-                  style={{
-                    marginTop: "5px",
-                    marginBottom: "15px",
-                    fontSize: "35px",
-                  }}
-                >
+                <Label for="exampleAbc" style={{marginTop: "5px", marginBottom: "15px", fontSize: "35px"}}>
                   <b>Item Form</b>
                 </Label>
               </div>

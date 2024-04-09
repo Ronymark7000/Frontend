@@ -185,12 +185,12 @@ function Sidebar(){
                   </li> */}
     
                   <li>
-                    <a href="#">
+                  <Link to={"/admin/inventory"}>
                       <span className="icon">
                         <ion-icon name="file-tray-stacked-outline"></ion-icon>
                       </span>
                       <span className="title">Inventory</span>
-                    </a>
+                    </Link>
                   </li>
     
                   {/* <li>
