@@ -4,15 +4,51 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../axiosInstance";
 import { getCurrentMetalPrice } from "../../../services/PriceInstance";
+import { getAllFromBooklist } from "../../../services/BooklistInstance";
 
 function ItemDetails() {
-    const { itemCode } = useParams();
+    const {itemCode} = useParams();
     const [itemInfo, setItemInfo] = useState(null);
     const [currentGoldPrice, setCurrentGoldPrice] = useState(null);
     const [userProfile, setUserProfile] = useState(null);
 
     const [imageUrl, setImageUrl] = useState(null);
     const [videoUrl, setVideoUrl] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const handleSubmit = async (itemCode) => {
+        setIsLoading(true);
+        try {
+            if (itemCode) {
+                console.log(itemCode)
+                const response = await axiosInstance.post('/booklist', itemCode);
+                if (response.data.success) {
+                    getAllFromBooklist();
+                    console.log('Item added successfully');
+                    window.alert('Item added successfully');
+                } else {
+                    console.log('Failed to add item to booklist');
+                    window.alert(response.data.message || 'Failed to add item to booklist');
+                }
+            } else {
+                console.error('Item code is undefined or null');
+                setError('Item code is undefined or null');
+            }
+        } catch (error) {
+            console.error('An error occurred while adding item to booklist:', error);
+            setError('An error occurred while adding item to booklist. Please try again.');
+        }
+        setIsLoading(false);
+    };
+    
+    
+
+    const booklists = JSON.parse(localStorage.getItem("bookList")) || [];
+    const itemExistAlreadyExistInCart = booklists.find(
+        (booklist) => booklist?.item?.itemCode === itemCode
+    );
 
     useEffect(() => {
         const userProfile = localStorage.getItem("userProfile");
@@ -146,9 +182,10 @@ function ItemDetails() {
                         {/* Item Booking Button Display  */}
                         <div className="mb-4" style={{height:"40px"}}>
                             {userProfile ? (
-                                <Link to="#">
-                                    <Button style={{ background: "#03C988", fontSize: "0.875rem", height: "40px", width: "150px", marginLeft:"10px" }}>Book Product</Button>
-                                </Link>
+                                    <Button type="submit" onClick={() => handleSubmit(itemCode)} style={{ background: "#03C988", fontSize: "0.875rem", height: "40px", width: "150px", marginLeft:"10px" }}>
+                                    {itemExistAlreadyExistInCart ? 'In BookList' : (isLoading ? 'Wait...' : 'Add to BookList')}
+                                    </Button>
+                                
                             ) : (
                                 <Link to="/login">
                                     <Button style={{ background: "#F47645", fontSize: "0.875rem", height: "40px", width: "150px", marginLeft:"10px" }}>Log In to Book</Button>
@@ -159,6 +196,7 @@ function ItemDetails() {
                                 <Button style={{ background: "#2192FF", fontSize: "0.875rem", height: "40px", width: "150px", marginLeft:"10px" }}>Back to Products</Button>
                             </Link>
                         </div>
+
 
                         {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
                        

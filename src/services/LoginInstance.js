@@ -1,4 +1,6 @@
 import axiosInstance from "../../axiosInstance";
+import { getAllFromBooklist } from "./BooklistInstance";
+
 
 export const handleLogin = async (email, password) => {
   const response = await axiosInstance
@@ -8,8 +10,7 @@ export const handleLogin = async (email, password) => {
 
   if (response?.success) {
     "Success Login"
-    // getProfile();
-    // getAllFromCart();
+    getAllFromBooklist();
   }
   return response;
 };

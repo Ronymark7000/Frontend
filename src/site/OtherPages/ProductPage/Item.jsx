@@ -5,8 +5,14 @@ import { Button, Card, CardBody, CardText, CardTitle } from "reactstrap";
 import { getPublicItems } from "../../../services/ItemInstance";
 import { getCurrentMetalPrice } from "../../../services/PriceInstance";
 import NoSuchData from "../../../assets/NoItemFound.svg";
+// import { addToBooklist } from "../../../services/BooklistInstance";
+import axiosInstance from "../../../../axiosInstance";
+import { addToBooklist, getAllFromBooklist } from "../../../services/BooklistInstance";
 
 function Item({item}) {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
     const [items, setItems] = useState([]);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -18,6 +24,41 @@ function Item({item}) {
     const [searchQuery, setSearchQuery] = useState("");
     const [itemsPerPage, setItemsPerPage] = useState(8);
     const [activePage, setActivePage] = useState(1);
+
+    const handleSubmit = async (itemCode) => {
+        setIsLoading(true);
+        try {
+            if (itemCode) {
+                console.log(itemCode)
+                const response = await axiosInstance.post('/booklist', itemCode);
+                if (response.data.success) {
+                    getAllFromBooklist();
+                    console.log('Item added successfully');
+                    window.alert('Item added successfully');
+                } else {
+                    console.log('Failed to add item to booklist');
+                    window.alert(response.data.message || 'Failed to add item to booklist');
+                }
+            } else {
+                console.error('Item code is undefined or null');
+                setError('Item code is undefined or null');
+            }
+        } catch (error) {
+            console.error('An error occurred while adding item to booklist:', error);
+            setError('An error occurred while adding item to booklist. Please try again.');
+        }
+        setIsLoading(false);
+    };
+    
+    
+
+    const booklists = JSON.parse(localStorage.getItem("bookList")) || [];
+    const itemExistAlreadyExistInCart = booklists.find(
+        (booklist) => booklist?.item?.itemCode === item?.itemCode
+    );
+
+      
+  
 
     useEffect(() => {   
         // Check if userProfile exists in localStorage
@@ -249,9 +290,11 @@ const filteredItems = useMemo(() => {
                                         <Link to={`/product/${item.itemCode}` }>
                                             <Button style={{ background: "#2192FF", fontSize: "0.875rem", height: "40px", width: "120px" }}>Quick Details</Button>
                                         </Link>
-                                        <Link to="#">
-                                            <Button style={{ background: "#03C988", fontSize: "0.875rem", height: "40px", width: "120px" }}>Book Item</Button>
-                                        </Link>
+
+                                        <Button type="submit" onClick={() => handleSubmit(item.itemCode)} disabled={isLoading} style={{ background: "#03C988", fontSize: "0.875rem", height: "40px", width: "120px" }}>
+                                        {itemExistAlreadyExistInCart ? 'In BookList' : (isLoading ? 'Wait...' : 'Book Item')}
+                                        </Button>
+                                        
                                         </>
                                     ) : (
                                         <Link to={`/product/${item.itemCode}` }>

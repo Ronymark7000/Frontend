@@ -20,6 +20,7 @@ import Item from "./site/OtherPages/ProductPage/Item";
 import ItemDetails from "./site/OtherPages/ProductPage/ItemDetailPage";
 import Inventory from "./admin/components/Inventory/Inventory";
 import InventoryView from "./admin/components/Inventory/InventoryView";
+import Profile from "./site/OtherPages/ProfilePage/Profile";
 
 
 const AppRoutes = () => {
@@ -33,6 +34,7 @@ const AppRoutes = () => {
         <Route path="/api/auth/confirm-account" element={<Confirmation/>} />
         <Route path="/product" element={<Item/>}/>
         <Route path="/product/:itemCode" element={<ItemDetails/>}/>
+        <Route path="/profile" element={<Profile/>}/>
 
           {/* For Public Route only */}
         <Route path="login" element={

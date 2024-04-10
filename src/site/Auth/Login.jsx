@@ -44,10 +44,11 @@ const Login = () => {
 
       if (response?.success == true && response!= null) {
         
-
         const response= await axiosInstance.get("/profile")
         localStorage.setItem("userProfile", JSON.stringify(response?.data?.response));
         const userRole = response?.data?.response?.role
+
+        
         
         userRole === "Admin" ? navigate("/admin") : navigate("/");
         window.location.reload();

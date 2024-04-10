@@ -3,10 +3,18 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import { getCurrentMetalPrice } from "../../../services/PriceInstance";
 import { emitInfoToast } from "../Toast/EmitToast";
+import Popup from "../Popup/Popup";
+import Profile from "../../OtherPages/ProfilePage/Profile";
 
 function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [openPopup, setOpenPopup] = useState(false);
+
+    const handleClosePopup = () => {
+        setOpenPopup(false);
+      };
 
   // State to manage the navbar's openness
   const [isOpen, setIsOpen] = useState(false);
@@ -94,6 +102,7 @@ function Navbar() {
   };
 
   return (
+    <>
     <div>
       <div className="topbar">
         <h4>
@@ -181,11 +190,13 @@ function Navbar() {
                   </Link>
                 </li>
 
+                <span onClick={() => { setOpenPopup(true);}}>
                 <li className={`nav-item ${location.pathname === '/profile' ? 'active' : ''}`}>
-                  <Link to={"/profile"} className="nav-link">
+                  <Link to={"#"} className="nav-link">
                     <span className="link-text">Profile</span>
                   </Link>
                 </li>
+                </span>
          
 
                 <li className="nav-item">
@@ -221,6 +232,10 @@ function Navbar() {
 
     </div>
 
+    <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
+    <Profile handleClosePopup={handleClosePopup}/>
+    </Popup>
+    </>
   );
 }
 
