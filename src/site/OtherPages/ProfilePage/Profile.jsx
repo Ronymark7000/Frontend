@@ -87,7 +87,7 @@ function Profile({handleClosePopup}){
                       type="button"
                       onClick={handleCancel}
                       className="btn btn-outline-primary"
-                      style={{width:"270px", marginLeft:"10%", marginRight:"10%"}}
+                      style={{width:"280px", marginLeft:"10%", marginRight:"10%"}}
                     >
                       Close
                     </button>

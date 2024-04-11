@@ -184,9 +184,9 @@ function Navbar() {
             
               {user ? (
                 <>
-                 <li className={`nav-item ${location.pathname === '/booking' ? 'active' : ''}`}>
-                  <Link to={"/booking"} className="nav-link">
-                    <span className="link-text">Booking</span>
+                 <li className={`nav-item ${location.pathname === '/booklist' ? 'active' : ''}`}>
+                  <Link to={"/booklist"} className="nav-link">
+                    <span className="link-text">BookList</span>
                   </Link>
                 </li>
 

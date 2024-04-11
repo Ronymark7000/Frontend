@@ -21,6 +21,8 @@ import ItemDetails from "./site/OtherPages/ProductPage/ItemDetailPage";
 import Inventory from "./admin/components/Inventory/Inventory";
 import InventoryView from "./admin/components/Inventory/InventoryView";
 import Profile from "./site/OtherPages/ProfilePage/Profile";
+import BookListItem from "./site/OtherPages/BookListPage/BookListItem";
+import BookList from "./site/OtherPages/BookListPage/BookList";
 
 
 const AppRoutes = () => {
@@ -35,6 +37,8 @@ const AppRoutes = () => {
         <Route path="/product" element={<Item/>}/>
         <Route path="/product/:itemCode" element={<ItemDetails/>}/>
         <Route path="/profile" element={<Profile/>}/>
+        <Route path="/booklist" element={<BookList/>}/>
+        <Route path="/booklistItemss" element={<BookList/>}/>
 
           {/* For Public Route only */}
         <Route path="login" element={

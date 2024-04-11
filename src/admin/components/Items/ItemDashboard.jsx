@@ -282,7 +282,7 @@ const ItemDashboard = () => {
                             <Dropdown.Item onClick={() => handleItemsPerPageChange(4)}>4</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleItemsPerPageChange(8)}>8</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleItemsPerPageChange(10)}>10</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleItemsPerPageChange(15)}>215</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(15)}>15</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
