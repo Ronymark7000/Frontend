@@ -1,0 +1,51 @@
+.headerMain{
+    min-height: 105vh;
+    background:linear-gradient(45deg, #e8e8e8,#ffffff,  #e0e0e0, #e8e8e8)
+}
+
+.description1{
+    margin-top: 20px;
+   margin-left: 28%;
+   margin-right: 28%;
+   text-align: center;
+}
+
+.aboutStore{
+    min-height: 70vh;
+    width: 45%;
+    margin: 30px;
+    margin-left: 10%;
+    border-radius: 8px;
+    background: linear-gradient(-45deg, #CBB266,#FAFAB8, #FAFAB8, #CBB266);
+}
+
+.aboutService{
+    min-height: 30vh;
+    width: 45%;
+    margin: 30px;
+    margin-right: 10%;
+    color: #62605A;
+}
+
+.line14{
+    margin-top: 40px;
+    max-height: 5px;
+    background-color: #FAF398;
+    border-radius: 5px;
+    margin-top: 9px;
+    margin-left: 35px;
+    margin-right: 35px;
+    color: var(--gray);
+}
+
+
+.aboutServiceBox{
+    margin-left: 5%;
+    margin-bottom: 25px;
+    width: 90%;
+    height: 5vh;
+    border-radius: 5px;
+    padding-top: 5px;
+    text-align: center;
+    background: linear-gradient(-45deg, #e0c984,#FAFAB8, #FAFAB8, #e0c984);
+}

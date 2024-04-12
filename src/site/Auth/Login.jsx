@@ -136,7 +136,7 @@ const Login = () => {
             </button>
 
             <p className="account-text">
-              Dont have an account?
+              Don't have an account?
               <a href="#" id="sign-up-btn2" onClick={handleSignInClick}>
                 Sign up
               </a>

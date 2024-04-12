@@ -193,14 +193,14 @@ function Sidebar(){
                     </Link>
                   </li>
     
-                  {/* <li>
-                    <a href="#">
+                  <li>
+                    <Link to={"/admin/booking"}>
                       <span className="icon">
-                        <ion-icon name="search-circle-outline"></ion-icon>
+                        <ion-icon name="megaphone-outline"></ion-icon>
                       </span>
-                      <span className="title">Product Valuation</span>
-                    </a>
-                  </li> */}
+                      <span className="title">Booking Details</span>
+                    </Link>
+                  </li>
 
                   <li>
                     <a href="#">
@@ -217,19 +217,6 @@ function Sidebar(){
                         <ion-icon name="receipt-outline"></ion-icon>
                       </span>
                       <span className="title">Customer Order</span>
-                    </a>
-                  </li>
-
-                  
-
-                  
-    
-                  <li>
-                    <a href="#">
-                      <span className="icon">
-                        <ion-icon name="megaphone-outline"></ion-icon>
-                      </span>
-                      <span className="title">Customer Feedbacks</span>
                     </a>
                   </li>
     

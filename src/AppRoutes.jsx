@@ -23,6 +23,9 @@ import InventoryView from "./admin/components/Inventory/InventoryView";
 import Profile from "./site/OtherPages/ProfilePage/Profile";
 import BookListItem from "./site/OtherPages/BookListPage/BookListItem";
 import BookList from "./site/OtherPages/BookListPage/BookList";
+import AboutUs from "./site/OtherPages/AboutUsPage/AboutUs";
+import BookedItem from "./site/OtherPages/BookedPage/BookedItem";
+import BookingTable from "./admin/components/Booking/BookingTable";
 
 
 const AppRoutes = () => {
@@ -39,6 +42,9 @@ const AppRoutes = () => {
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/booklist" element={<BookList/>}/>
         <Route path="/booklistItemss" element={<BookList/>}/>
+        <Route path="/aboutUs" element={<AboutUs/>}/>
+        <Route path="/booked" element={<BookedItem/>}/>
+        
 
           {/* For Public Route only */}
         <Route path="login" element={
@@ -71,6 +77,8 @@ const AppRoutes = () => {
 
           <Route path="inventory" element={<Inventory/>} />
           <Route path="inventory/:itemCode" element={<InventoryView/>}/>
+
+          <Route path="booking" element={<BookingTable/>}/>
 
        
         </Route>

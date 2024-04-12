@@ -190,6 +190,12 @@ function Navbar() {
                   </Link>
                 </li>
 
+                <li className={`nav-item ${location.pathname === '/booked' ? 'active' : ''}`}>
+                  <Link to={"/booked"} className="nav-link">
+                    <span className="link-text">Booked Items</span>
+                  </Link>
+                </li>
+
                 <span onClick={() => { setOpenPopup(true);}}>
                 <li className={`nav-item ${location.pathname === '/profile' ? 'active' : ''}`}>
                   <Link to={"#"} className="nav-link">
@@ -207,8 +213,8 @@ function Navbar() {
                 </>
               ) : (
                 <>
-                <li className={`nav-item ${location.pathname === '/aboutus' ? 'active' : ''}`}>
-                  <Link to={"/aboutus"} className="nav-link">
+                <li className={`nav-item ${location.pathname === '/aboutUs' ? 'active' : ''}`}>
+                  <Link to={"/aboutUs"} className="nav-link">
                     <span className="link-text">About Us</span>
                   </Link>
                 </li>

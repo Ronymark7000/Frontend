@@ -3,15 +3,21 @@ import BookListItem from "./BookListItem";
 import { deleteItemFromBooklist } from "../../../services/BooklistInstance";
 import { useState, useEffect } from "react";
 import { getCurrentMetalPrice } from "../../../services/PriceInstance";
+import axiosInstance from "../../../../axiosInstance";
 
 function BookList() {
     const booklist = localStorage.getItem("bookList");
     const [booklistData, setBooklistData] = useState(JSON.parse(booklist || "[]"));
     const [totalPrice, setTotalPrice] = useState(0);
     const [priceDate, setPriceDate] = useState(null);
+    const [selectedDays, setSelectedDays] = useState("");
+
+    const handleDaysChange = (event) => {
+      setSelectedDays(event.target.value);
+    };
 
     useEffect(() => {
-      // Fetch current metal price
+      // Fetch current metal pricen
       const fetchCurrentMetalPrice = async () => {
         try {
           const response = await getCurrentMetalPrice();
@@ -94,6 +100,28 @@ function BookList() {
         }
       };
 
+      const addBookedItems = async () => {
+        const requestData = {
+          noOfDays: selectedDays, // Use the selectedDays state
+          // Include any other necessary data in the request body
+        };
+      
+        try {
+          const response = await axiosInstance.post(`/booked-items`, requestData);
+          if (response?.data?.success) {
+            setBooklistData([]);
+            localStorage.removeItem("bookList");
+            window.alert("Successfully Placed Your Booking Order");
+          } else {
+            window.alert("Booking Order failed");
+          }
+        } catch (error) {
+          console.error("Error confirming booking:", error);
+          window.alert("An error occurred while confirming the booking");
+        }
+      };
+      
+
       const totalCost = totalPrice;
       const numberOfItems = booklistData.length;
       
@@ -170,15 +198,14 @@ function BookList() {
                       <div className="mb-4 pb-2">
                         <div className="input-group mb-3">
                           <label className="input-group-text">No. of Days</label>
-                          <select className="form-select w-50" >
-                            <option value="" disabled>Choose an option...</option>
-                            <option value="1">1 </option>
-                            <option value="2">2 </option>
-                            <option value="3">3 </option>
-                            <option value="4">4 </option>
-                            <option value="5">5 </option>
-                            <option value="6">6 </option>
-                            <option value="7">7 </option>
+                          <select
+                            className="form-select w-25"
+                            value={selectedDays} // Bind selected value to state
+                            onChange={handleDaysChange} // Handle change event
+                          >
+                            <option value="7" selected disabled>
+                              7 Days 
+                            </option>
                           </select>
                         </div>
                       </div>
@@ -196,6 +223,7 @@ function BookList() {
                         <button
                           className="btn btn-dark btn-block w-100"
                           type="button"
+                          onClick={addBookedItems}
                         >
                           Confirm Booking
                         </button>
