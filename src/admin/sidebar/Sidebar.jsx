@@ -203,21 +203,21 @@ function Sidebar(){
                   </li>
 
                   <li>
-                    <a href="#">
+                  <Link to={"/admin/add-order"}>
                       <span className="icon">
                       <ion-icon name="documents-outline"></ion-icon>
                       </span>
-                      <span className="title">Orders</span>
-                    </a>
+                      <span className="title">Add Orders</span>
+                    </Link>
                   </li>
     
                   <li>
-                    <a href="#">
+                    <Link to={"/admin/order-dashboard"}>
                       <span className="icon">
                         <ion-icon name="receipt-outline"></ion-icon>
                       </span>
                       <span className="title">Customer Order</span>
-                    </a>
+                    </Link>
                   </li>
     
                   <li>

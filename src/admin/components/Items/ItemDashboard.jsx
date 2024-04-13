@@ -120,7 +120,7 @@ const ItemDashboard = () => {
             accessorKey: "grossWeight",
             header: "Grs.Wt",
             cell: ({ getValue }) => {
-              return <div>{getValue()}</div>;
+              return <div>{getValue()} t</div>;
             },
           },
           {
@@ -134,7 +134,7 @@ const ItemDashboard = () => {
             accessorKey: "netWeight",
             header: "Net.Wt",
             cell: ({ getValue }) => {
-              return <div>{getValue()} </div>;
+              return <div>{getValue()} t</div>;
             },
           },
           {

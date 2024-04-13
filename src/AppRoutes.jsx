@@ -21,11 +21,13 @@ import ItemDetails from "./site/OtherPages/ProductPage/ItemDetailPage";
 import Inventory from "./admin/components/Inventory/Inventory";
 import InventoryView from "./admin/components/Inventory/InventoryView";
 import Profile from "./site/OtherPages/ProfilePage/Profile";
-import BookListItem from "./site/OtherPages/BookListPage/BookListItem";
 import BookList from "./site/OtherPages/BookListPage/BookList";
 import AboutUs from "./site/OtherPages/AboutUsPage/AboutUs";
 import BookedItem from "./site/OtherPages/BookedPage/BookedItem";
 import BookingTable from "./admin/components/Booking/BookingTable";
+import OrderDashboard from "./admin/components/Orders/OrderDashboard";
+import AddOrder from "./admin/components/Orders/AddOrder";
+import EditOrder from "./admin/components/Orders/EditOrder";
 
 
 const AppRoutes = () => {
@@ -79,6 +81,10 @@ const AppRoutes = () => {
           <Route path="inventory/:itemCode" element={<InventoryView/>}/>
 
           <Route path="booking" element={<BookingTable/>}/>
+
+          <Route path="order-dashboard" element={<OrderDashboard />} />
+          <Route path="add-order" element={<AddOrder />} />
+          <Route path="edit-order/:orderId" element={<EditOrder />} />
 
        
         </Route>
