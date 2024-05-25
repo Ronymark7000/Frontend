@@ -25,6 +25,7 @@ const Login = () => {
     containerRef.current.classList.remove("sign-up-mode2");
   };
 
+  const [errors, setErrors] = useState({});
   //state
   const navigate = useNavigate();
 
@@ -36,9 +37,33 @@ const Login = () => {
   const [role, setRole] = useState("");
   //const [user, setUser] = useState("User");
 
+  const validateLogin = () => {
+    let errors = {};
+    if (!email) errors.email = "Email is required.";
+    if (!password) errors.password = "Password is required.";
+    return errors;
+  };
+
+  const validateSignup = () => {
+    let errors = {};
+    if (!firstname) errors.firstname = "First name is required.";
+    if (!lastname) errors.lastname = "Last name is required.";
+    if (!email) errors.email = "Email is required.";
+    if (!password) errors.password = "Password is required.";
+    if (!contact) errors.contact = "Contact number is required.";
+    return errors;
+  };
+
   //login function
   //    /api/auth/login -> success
   const handleClick = async () => {
+    let errors = formType === "login" ? validateLogin() : validateSignup();
+
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach(error => emitErrorToast(error));
+      return;
+    }
+
     if (formType === "login") {
       const response = await handleLogin(email, password);
 
@@ -114,6 +139,7 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
+              {errors.email && <p className="error-text">{errors.email}</p>}
             </div>
 
             {/* <!--Input field for Password --> */}
@@ -129,6 +155,7 @@ const Login = () => {
                 onChange={(e) => setpassword(e.target.value)}
                 />
               </div>
+              {errors.password && <p className="error-text">{errors.password}</p>}
             </div>
 
             <button type="button" className="btn" onClick={handleClick}>
@@ -162,6 +189,7 @@ const Login = () => {
                 onChange={(e) => setfirstname(e.target.value)}
                 />
               </div>
+              {errors.firstname && <p className="error-text">{errors.firstname}</p>}
             </div>
 
             <div className="input-field">
@@ -176,6 +204,7 @@ const Login = () => {
                 onChange={(e) => setlastname(e.target.value)}
                 />
               </div>
+              {errors.lastname && <p className="error-text">{errors.lastname}</p>}
             </div>
 
             {/* <!--Input field for Email --> */}
@@ -191,6 +220,7 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
+              {errors.email && <p className="error-text">{errors.email}</p>}
             </div>
 
             {/* <!--Input field for Password --> */}
@@ -206,6 +236,7 @@ const Login = () => {
                 onChange={(e) => setpassword(e.target.value)}
                 />
               </div>
+              {errors.password && <p className="error-text">{errors.password}</p>}
             </div>
 
             {/* <!--Input field for Contact --> */}
@@ -221,6 +252,7 @@ const Login = () => {
                 onChange={(e) => setContact(e.target.value)}
                 />
               </div>
+              {errors.contact && <p className="error-text">{errors.contact}</p>}
             </div>
 
             <button className="btn" type="button" onClick={handleClick}>

@@ -59,7 +59,12 @@ function AddUser({currentUser, isEditing, handleClosePopup, onDataChange}) {
     return (
         <>
             <div style={{ width: "500px", color:"#62605A", marginLeft:"120px", marginRight:"120px" }}>
-                <Formik initialValues={ form } onSubmit={forSubmit} validationSchema={UserSchema} enableReinitialize>
+                <Formik initialValues={ form } onSubmit={forSubmit} validationSchema={UserSchema} enableReinitialize
+                 initialTouched={Object.keys(form).reduce((acc, key) => {
+                    acc[key] = true;
+                    return acc;
+                  }, {})}
+                >
                     {({ errors, touched }) => (
                     <Form style={{ width: "95%"}}>
                         <div>
@@ -120,7 +125,7 @@ function AddUser({currentUser, isEditing, handleClosePopup, onDataChange}) {
                             <label className="col-sm-4 col-form-label" htmlFor="exampleInputPassword"><b>Password</b></label>
                             <div className="col-sm-8">
                                 <Field className="form-control" name="password" placeholder="Enter password" type="text"/>
-                                    {errors.password && touched.password ? (
+                                    {errors.password ? (
                                     <div className="text-danger blockquote-footer mt-1">
                                         {errors.password}
                                     </div>

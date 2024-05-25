@@ -97,7 +97,7 @@ const Inventory = ({item}) => {
                 </label>
             </div>
                    
-            <div style={{marginLeft:"154px", minWidth:"1130px"}}>
+            <div style={{marginLeft:"198px", minWidth:"1130px"}}>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4" style={{ paddingTop: "60px" }}>
                 {filteredItems.length > 0 ? (
                     filteredItems.map((item, index) => (

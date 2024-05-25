@@ -49,13 +49,15 @@ const AppRoutes = () => {
         
 
           {/* For Public Route only */}
-        <Route path="login" element={
-              <Public>
-                <Login />
-              </Public>
-            }
-        />
-        </Route>
+          <Route
+              path="login"
+              element={
+                <Public>
+                  <Login />
+                </Public>
+              }
+            />
+          </Route>
         
         {/* For Admin Routing Only */}
         <Route
