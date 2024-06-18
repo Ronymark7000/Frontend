@@ -28,6 +28,7 @@ import BookingTable from "./admin/components/Booking/BookingTable";
 import OrderDashboard from "./admin/components/Orders/OrderDashboard";
 import AddOrder from "./admin/components/Orders/AddOrder";
 import EditOrder from "./admin/components/Orders/EditOrder";
+import Payment from "./admin/components/Payment/Payment"
 
 
 const AppRoutes = () => {
@@ -87,6 +88,8 @@ const AppRoutes = () => {
           <Route path="order-dashboard" element={<OrderDashboard />} />
           <Route path="add-order" element={<AddOrder />} />
           <Route path="edit-order/:orderId" element={<EditOrder />} />
+
+          <Route path="payment" element={<Payment/>} />
 
        
         </Route>

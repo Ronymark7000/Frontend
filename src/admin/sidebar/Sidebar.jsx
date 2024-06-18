@@ -123,8 +123,8 @@ function Sidebar(){
                           <ion-icon name="diamond-outline"></ion-icon>
                         </b>
                       </span>
-                      <span className="title" style={{ fontSize: "26px"}}>
-                        <b>JewelHub</b>
+                      <span className="title" style={{ fontSize: "24px"}}>
+                        <b>Sun Chadi Gahana</b>
                       </span>
                     </a>
                   </li>
@@ -150,7 +150,7 @@ function Sidebar(){
                   <li>
                     <Link to={"/admin/item-dashboard"}>
                       <span className="icon">
-                      <ion-icon name="grid-outline"></ion-icon>
+                      <ion-icon name="grid"></ion-icon>
                       </span>
                       <span className="title">Item Dashboard</span>
                     </Link>
@@ -160,7 +160,7 @@ function Sidebar(){
                   <li>
                     <Link to={"/admin/add-item"}>
                       <span className="icon">
-                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <ion-icon name="add-circle"></ion-icon>
                       </span>
                       <span className="title">Add Items</span>
                     </Link>
@@ -187,7 +187,7 @@ function Sidebar(){
                   <li>
                   <Link to={"/admin/inventory"}>
                       <span className="icon">
-                        <ion-icon name="file-tray-stacked-outline"></ion-icon>
+                        <ion-icon name="file-tray-stacked"></ion-icon>
                       </span>
                       <span className="title">Inventory</span>
                     </Link>
@@ -229,6 +229,15 @@ function Sidebar(){
                     </Link>
                   </li>
     
+                  <li>
+                    <Link to={"/admin/payment"}>
+                      <span className="icon">
+                        <ion-icon name="card"></ion-icon>
+                      </span>
+                      <span className="title">Payment</span>
+                    </Link>
+                  </li>
+
                   <li>
                     <Link to="#" onClick={handleLogout}>
                       <span className="icon">

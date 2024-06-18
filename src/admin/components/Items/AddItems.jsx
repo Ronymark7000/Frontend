@@ -31,7 +31,7 @@ function AddItems({ editItem }) {
     description: "",
     totalCost: "",
     itemImageUrl: "",
-    itemVideoUrl: "",
+    // itemVideoUrl: "",
   };
 
   const [form, setForm] = useState(initialFormState);
@@ -64,13 +64,13 @@ function AddItems({ editItem }) {
 
   const [source, setSource] = React.useState();
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setForm((prev) => ({ ...prev, itemVideoUrl: file }));
-    const url = URL.createObjectURL(file); // This line causes the error
-    setSource(url);
-    // handleVideoChange(file); // Pass the selected video file to the parent component
-  };
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setForm((prev) => ({ ...prev, itemVideoUrl: file }));
+  //   const url = URL.createObjectURL(file); // This line causes the error
+  //   setSource(url);
+  //   // handleVideoChange(file); // Pass the selected video file to the parent component
+  // };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -93,7 +93,7 @@ function AddItems({ editItem }) {
 
                 switch (value) {
                     case "22":
-                        karatMultiplier = 0.916;
+                        karatMultiplier = 0.92;
                         break;
                     case "18":
                         karatMultiplier = 0.75;
@@ -186,7 +186,8 @@ function AddItems({ editItem }) {
     try {
       const formData = new FormData();
       Object.entries(values).forEach(([key, value]) => {
-        if (key !== "itemImageUrl" && key !== "itemVideoUrl") {
+        if (key !== "itemImageUrl") {
+          // && key !== "itemVideoUrl"
           formData.append(key, value);
         }
       });
@@ -197,9 +198,10 @@ function AddItems({ editItem }) {
       }
 
       // Append the video file to the FormData if it exists
-      if (values.itemVideoUrl) {
-        formData.append("itemVideo", values.itemVideoUrl);
-      }
+      // if (values.itemVideoUrl) {
+      //   formData.append("itemVideo", values.itemVideoUrl);
+      // }
+      console.log("FormData content:", formData); // Debugging log
 
       if (editItem) {
         await axiosInstance.put(`/item/${editItem?.itemCode}`, formData, {
@@ -209,6 +211,7 @@ function AddItems({ editItem }) {
         });
         emitInfoToast("Updated Item Successfully");
       } else {
+     
         await axiosInstance.post("/item", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -220,7 +223,7 @@ function AddItems({ editItem }) {
       // Reset the form after successful submission
       resetForm();
     } catch (error) {
-      console.error(error);
+      console.error("Error in form submission:", error); // Improved error log
       emitErrorToast("Error Adding Item");
     }
   };
@@ -302,7 +305,7 @@ function AddItems({ editItem }) {
                     />
                   </div>
 
-                  <div
+                  {/* <div
                     style={{
                       width: "490px",
                       marginLeft: "47px",
@@ -344,11 +347,11 @@ function AddItems({ editItem }) {
                         ref={inputRef}
                         className="form-control form-control-sm mt-3 mb-2"
                         type="file"
-                        onChange={handleFileChange}
-                        accept=".mov,.mp4"
+                        // onChange={handleFileChange}
+                        // accept=".mov,.mp4"
                       />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Rigth Side of the form */}

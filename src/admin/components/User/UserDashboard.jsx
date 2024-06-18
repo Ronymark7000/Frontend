@@ -168,47 +168,47 @@ const UserDashboard = () => {
         },
       },
 
-      // {
-      //   accessorKey: "actions",
-      //   header: "Delete User",
-      //   cell: ({ row }) => {
-      //     const userId = row.original.userId;
+      {
+        accessorKey: "actions",
+        header: "Delete User",
+        cell: ({ row }) => {
+          const userId = row.original.userId;
 
-      //     const handleDelete = () => {
-      //       console.log("Delete clicked for ID:", userId);
-      //       const confirmDelete = window.confirm(
-      //         "Are you sure you want to delete this user?"
-      //       );
-      //       if (confirmDelete) {
-      //         axiosInstance
-      //           .delete(`/user/${userId}`)
-      //           .then(() => {
-      //             refetch();
-      //             console.log("Delete successful for ID:", userId);
-      //             // window.confirm("Deleted Successfully....");
-      //             window.alert("Successfully deleted");
-      //             emitInfoToast("User Deleted Successfully")
-      //           })
-      //           .catch((error) => {
-      //             console.error("Error deleting user:", error);
-      //             window.alert("Could not delete the data");
-      //           });
-      //       }
-      //     }
+          const handleDelete = () => {
+            console.log("Delete clicked for ID:", userId);
+            const confirmDelete = window.confirm(
+              "Are you sure you want to delete this user?"
+            );
+            if (confirmDelete) {
+              axiosInstance
+                .delete(`/user/${userId}`)
+                .then(() => {
+                  refetch();
+                  console.log("Delete successful for ID:", userId);
+                  // window.confirm("Deleted Successfully....");
+                  window.alert("Successfully deleted");
+                  emitInfoToast("User Deleted Successfully")
+                })
+                .catch((error) => {
+                  console.error("Error deleting user:", error);
+                  window.alert("Could not delete the data");
+                });
+            }
+          }
 
-      //     return (
-      //       <div>
-      //         <button
-      //           className="btn2 btn-danger"
-      //           style={{ background: "#fa5768" }}
-      //           onClick={() => handleDelete(userId)}
-      //         >
-      //           <ion-icon name="trash-outline"></ion-icon>
-      //         </button>
-      //       </div>
-      //     );
-      //   },
-      // },
+          return (
+            <div>
+              <button
+                className="btn2 btn-danger"
+                style={{ background: "#fa5768" }}
+                onClick={() => handleDelete(userId)}
+              >
+                <ion-icon name="trash-outline"></ion-icon>
+              </button>
+            </div>
+          );
+        },
+      },
       
       
     ];

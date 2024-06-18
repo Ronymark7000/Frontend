@@ -102,6 +102,7 @@ body{
     height: 450px; 
     min-height: 290px;
     max-height: 450px;
+    margin-left: 10px;
 }
 
 .chart11 h2{

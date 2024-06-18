@@ -116,7 +116,7 @@ const InventoryView = () => {
                             </video>
                         )}
                         </div>
-                        <p style={{marginLeft:"135px"}}><b>Video Preview</b></p>
+                        {/* <p style={{marginLeft:"135px"}}><b>Video Preview</b></p> */}
                     </div>
 
                     {/* Right Side of Item Details */}
@@ -230,7 +230,20 @@ const InventoryView = () => {
                             )}
                         </div>
 
-                        <div style={{height:"110px", paddingTop:"6px",   background: "#E0DBD3"}}>
+                        <div className="d-flex" style={{height:"40px", paddingTop:"6px",   background: "#E0DBD3"}}>
+                            <div style={{ width:"50%"}}>
+                                <p style={{fontSize:"18px" , paddingLeft:"20px"}}><b>Wastage  : </b></p>
+                            </div>
+                            {itemInfo ? (
+                                <div>
+                                <p style={{fontSize:"18px" , paddingLeft:"20px"}}>{itemInfo.wastage} %</p>
+                                </div>
+                            ) : (
+                                <p>Loading Item Manufacture Cost...</p>
+                            )}
+                        </div>
+
+                        <div style={{height:"110px", paddingTop:"6px"}}>
                             
                             <p style={{fontSize:"18px" , paddingLeft:"20px"}}><b>Description : </b></p>
                         {itemInfo ? (
@@ -240,9 +253,10 @@ const InventoryView = () => {
                         ) : (
                             <p>Loading Item Description...</p>
                         )}
-                    </div>
 
-                        <div className="d-flex mt-1" style={{height:"55px", paddingTop:"13px"}}>
+                        
+                    </div>
+                        <div className="d-flex mt-1 mb-5" style={{height:"55px", paddingTop:"13px",   background: "#E0DBD3"}}>
                            
                                 <p style={{fontSize:"22px" , paddingLeft:"20px"}}><b>Total Price : </b></p>
                             

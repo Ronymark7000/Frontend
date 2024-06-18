@@ -119,7 +119,7 @@ function Item({item}) {
         if (karat === 24) {
             goldPriceInt *= 1;
         } else if (karat === 22) {
-            goldPriceInt *= 0.916;
+            goldPriceInt *= 0.92;
         } else if (karat === 18) {
             goldPriceInt *= 0.75;
         } else if (karat === 14) {

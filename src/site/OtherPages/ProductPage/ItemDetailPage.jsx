@@ -13,7 +13,7 @@ function ItemDetails() {
     const [userProfile, setUserProfile] = useState(null);
 
     const [imageUrl, setImageUrl] = useState(null);
-    const [videoUrl, setVideoUrl] = useState(null);
+    // const [videoUrl, setVideoUrl] = useState(null);
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -86,7 +86,7 @@ function ItemDetails() {
         if (karat === 24) {
             goldPriceInt *= 1;
         } else if (karat === 22) {
-            goldPriceInt *= 0.916;
+            goldPriceInt *= 0.92;
         } else if (karat === 18) {
             goldPriceInt *= 0.75;
         } else if (karat === 14) {
@@ -108,7 +108,7 @@ function ItemDetails() {
                 const response = await axiosInstance.get(`/store/item/${itemCode}`);
                 setItemInfo(response.data?.response); // Assuming response.data contains item details
                 setImageUrl(response.data?.response?.itemImageUrl); // Assuming imageUrl is the property containing the image URL
-                setVideoUrl(response.data?.response?.itemVideoUrl);
+                // setVideoUrl(response.data?.response?.itemVideoUrl);
             } catch (error) {
                 console.error("Error fetching item details:", error);
             }
@@ -148,14 +148,14 @@ function ItemDetails() {
 
                         <br/>
                    
-                        <div  style={{width: "320px", height: "auto", marginTop: "10px", marginLeft:"9%"}}>
+                        {/* <div  style={{width: "320px", height: "auto", marginTop: "10px", marginLeft:"9%"}}>
                         {videoUrl && (
                             <video controls width="500px" height="auto" style={{borderRadius:"5px"}}>
                                 <source src={videoUrl} type="video/mp4" /> 
                             </video>
                         )}
                         </div>
-                        <p style={{textAlign:"center"}}><b>Video Preview</b></p>
+                        <p style={{textAlign:"center"}}><b>Video Preview</b></p> */}
                     </div>
 
                     {/* Right Side of Item Details */}
@@ -279,7 +279,20 @@ function ItemDetails() {
                             )}
                         </div>
 
-                        <div style={{height:"155px", paddingTop:"13px",   background: "#E0DBD3"}}>
+                        <div className="d-flex" style={{height:"55px", paddingTop:"13px",  background: "#E0DBD3"}}>
+                            <div style={{ width:"40%"}}>
+                                <p style={{fontSize:"18px" , paddingLeft:"20px"}}><b>Wastage (Jarti): </b></p>
+                            </div>
+                            {itemInfo ? (
+                                <div>
+                                <p style={{fontSize:"18px" , paddingLeft:"20px"}}>{itemInfo.wastage} %</p>
+                                </div>
+                            ) : (
+                                <p>Loading Item Wastage</p>
+                            )}
+                        </div>
+
+                        <div style={{height:"155px", paddingTop:"13px"}}>
                             
                             <p style={{fontSize:"18px" , paddingLeft:"20px"}}><b>Description : </b></p>
                         {itemInfo ? (
@@ -291,7 +304,7 @@ function ItemDetails() {
                         )}
                     </div>
 
-                        <div className="d-flex mt-3" style={{height:"55px", paddingTop:"13px"}}>
+                        <div className="d-flex mt-3 mb-5" style={{height:"55px", paddingTop:"13px",  background: "#E0DBD3"}}>
                            
                                 <p style={{fontSize:"22px" , paddingLeft:"20px"}}><b>Total Price : </b></p>
                             
