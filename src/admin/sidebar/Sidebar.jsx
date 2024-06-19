@@ -132,7 +132,7 @@ function Sidebar(){
                   <li>
                     <Link to={"/admin"}>
                       <span className="icon">
-                        <ion-icon name="home-outline"></ion-icon>
+                        <ion-icon name="home"></ion-icon>
                       </span>
                       <span className="title">Dashboard</span>
                     </Link>
@@ -141,7 +141,7 @@ function Sidebar(){
                   <li>
                     <Link to={"/admin/user-dashboard"}>
                       <span className="icon">
-                        <ion-icon name="people-outline"></ion-icon>
+                        <ion-icon name="people"></ion-icon>
                       </span>
                       <span className="title">User Details</span>
                     </Link>

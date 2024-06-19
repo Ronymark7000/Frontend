@@ -279,7 +279,7 @@ const filteredItems = useMemo(() => {
                     <div key={index} className="col">
                         <div style={{ marginRight: "5px", marginLeft: "1px", right: "10px" }}>
                             <Card style={{ width: "18rem", minHeight: "62vh", backgroundColor: "#f9f9f9" }}>
-                                <img alt={item.itemName} src={item.itemImageUrl} style={{ width: "270px", height: "320px", left: "10px", marginLeft: "10px", marginTop: "10px" }} />
+                                <img alt={item.itemName} src={item.itemImageUrl} style={{ width: "275px", height: "320px", left: "10px", marginLeft: "5px", marginTop: "10px" }} />
                                 <CardBody>
                                     <CardTitle tag="h5" style={{ fontSize: "bolder" }}>{item.itemName}</CardTitle>
                                     <CardText> <b>Price</b>: {currentGoldPrice ? `Nrs ${calculateTotalCost(item).toLocaleString()}` : 'Price Loading...'}</CardText>

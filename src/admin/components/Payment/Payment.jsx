@@ -1,6 +1,6 @@
-import ESewaQR from "../../../assets/ESewaQR.jpeg";
-import BankQR from "../../../assets/JyotiBikasBankQR.jpeg";
-import eSewaLogo from "../../../assets/eSewaLogo.png";
+import GarimaBankQR from "../../../assets/GarimaBikasBankQR.jpeg";
+import JyotiBankQR from "../../../assets/JyotiBikasBankQR.jpeg";
+import GarimaBankLogo from "../../../assets/GarimaBankLogo.png";
 import JyotiBankLogo from "../../../assets/JyotiBankLogo.png";
 
 function Payment () {
@@ -18,7 +18,7 @@ function Payment () {
                 {/* QR Scan for bank account */}
                 <br/>
                 <div style={{marginLeft:"20%", marginTop:"30px"}}>
-                    <img src={BankQR} alt="ESewaQR"/>
+                    <img src={JyotiBankQR} alt="JyotiBankQR"/>
                 </div>
 
                 <div className="form-group row mt-4 mb-3" style={{paddingLeft:"30px", margin:"80px"}}>
@@ -48,21 +48,21 @@ function Payment () {
                 {/* QR Scan for Esewa */}
                 <br/>
                 <div style={{marginLeft:"20%", marginTop:"40px"}}>
-                    <img src={ESewaQR} alt="ESewaQR"/>
+                    <img src={GarimaBankQR} alt="ESewaQR"/>
                 </div>
 
                 <div className="form-group row mt-4 mb-3" style={{paddingLeft:"30px", margin:"80px"}}>
-                        <p style={{fontSize:"15px", marginLeft:"55px"}}>
-                        <img src={eSewaLogo} alt="ESewaLogo" style={{width:"130px"}}/>
+                        <p style={{fontSize:"15px", marginLeft:"15px"}}>
+                        <img src={GarimaBankLogo} alt="ESewaLogo" style={{width:"230px"}}/>
                         </p>
                         <br/>
 
-                        <div style={{marginTop:"10px"}}>
-                            <p style={{fontSize:"20px", marginLeft:"35px"}}>Mana Ratna Shakya</p>  
-                            <p style={{fontSize:"18px", marginLeft:"65px"}}>9851093577</p>
+                        <div style={{marginTop:"13px"}}>
+                            <p style={{fontSize:"20px", marginLeft:"10px"}}><b>MANA RATNA SHAKYA</b></p>  
+                            <p style={{fontSize:"18px", marginLeft:"-5px"}}>Acc.no: 04810900992583000003</p>
                         </div>
                         <br/>
-                        <p style={{fontSize:"12px", marginLeft:"10px", marginTop:"45px"}}>Scan QR code for Payment through E-Sewa</p>
+                        <p style={{fontSize:"12px", marginLeft:"10px", marginTop:"45px"}}>Scan QR code for Payment via Banking</p>
                 </div>
                 
             </div>
