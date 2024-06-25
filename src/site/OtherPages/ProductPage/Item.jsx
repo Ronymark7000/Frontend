@@ -22,7 +22,7 @@ function Item({item}) {
     const [selectedCategory, setSelectedCategory] = useState(queryParams.get("category") || "all"); // Default to show all categories
     const [selectedKarat, setSelectedKarat] = useState("all"); // Default to show all karats
     const [searchQuery, setSearchQuery] = useState("");
-    const [itemsPerPage, setItemsPerPage] = useState(8);
+    const [itemsPerPage, setItemsPerPage] = useState(16);
     const [activePage, setActivePage] = useState(1);
 
     const handleSubmit = async (itemCode) => {
@@ -77,7 +77,8 @@ function Item({item}) {
             try {
                 const response = await getPublicItems();
                 if (response.data && response.data.success) {
-                    setItems(response.data.response);
+                    const filteredItems = response.data.response.filter(item => item.available === true);
+                    setItems(filteredItems);
                 } else {
                     console.error('Error fetching items:', response.data.message);
                 }
@@ -192,6 +193,55 @@ const filteredItems = useMemo(() => {
         setActivePage(1); // Reset activePage when items per page changes
     };
 
+    const getPaginationItems = () => {
+        const paginationItems = [];
+        let startPage = Math.max(1, activePage - 2);
+        let endPage = Math.min(totalPages, activePage + 2);
+  
+        if (activePage <= 3) {
+            startPage = 1;
+            endPage = Math.min(5, totalPages);
+        } else if (activePage > totalPages - 3) {
+            startPage = Math.max(totalPages - 4, 1);
+            endPage = totalPages;
+        }
+  
+        // Add first page and ellipsis if needed
+        if (startPage > 1) {
+            paginationItems.push(
+                <Pagination.Item key={1} active={1 === activePage} onClick={() => handlePageChange(1)}>
+                    1
+                </Pagination.Item>
+            );
+            if (startPage > 2) {
+                paginationItems.push(<Pagination.Ellipsis key="start-ellipsis" />);
+            }
+        }
+  
+        // Add range of pages
+        for (let page = startPage; page <= endPage; page++) {
+            paginationItems.push(
+                <Pagination.Item key={page} active={page === activePage} onClick={() => handlePageChange(page)}>
+                    {page}
+                </Pagination.Item>
+            );
+        }
+  
+        // Add ellipsis and last page if needed
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                paginationItems.push(<Pagination.Ellipsis key="end-ellipsis" />);
+            }
+            paginationItems.push(
+                <Pagination.Item key={totalPages} active={totalPages === activePage} onClick={() => handlePageChange(totalPages)}>
+                    {totalPages}
+                </Pagination.Item>
+            );
+        }
+  
+        return paginationItems;
+    };
+
     return (
         <div style={{ minHeight: "75vh" }}>
             <div style={{ width: "100%", minHeight: "1vh", backgroundColor: "#f9f9f9" }}>
@@ -206,10 +256,10 @@ const filteredItems = useMemo(() => {
                             {itemsPerPage}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => handleItemsPerPageChange(4)}>4</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleItemsPerPageChange(8)}>8</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleItemsPerPageChange(12)}>12</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleItemsPerPageChange(16)}>16</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(24)}>24</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(32)}>32</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(40)}>40</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
 
@@ -230,6 +280,7 @@ const filteredItems = useMemo(() => {
                         <option value="all">All</option>
                         <option value="Ring">Ring</option>
                         <option value="Necklace">Necklace</option>
+                        <option value="Chain">Chain</option>
                         <option value="Ear Ring">Ear Ring</option>
                         <option value="Pendant">Pendant</option>
                         <option value="JewelSet">Jewel Set</option>
@@ -320,17 +371,13 @@ const filteredItems = useMemo(() => {
             </div>
             <div className="d-flex flex-column align-items-center"> 
                 <div className="mt-3">
-                    <Pagination>
-                        <Pagination.First onClick={() => handlePageChange(1)} />
-                        <Pagination.Prev onClick={() => handlePageChange(activePage - 1)} disabled={activePage === 1} />
-                        {[...Array(totalPages).keys()].map((page) => (
-                            <Pagination.Item key={page + 1} active={page + 1 === activePage} onClick={() => handlePageChange(page + 1)}>
-                            {page + 1}
-                            </Pagination.Item>
-                        ))}
-                        <Pagination.Next onClick={() => handlePageChange(activePage + 1)} disabled={activePage === totalPages} />
-                        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-                    </Pagination>
+                <Pagination>
+                            <Pagination.First onClick={() => handlePageChange(1)} />
+                            <Pagination.Prev onClick={() => handlePageChange(activePage - 1)} disabled={activePage === 1} />
+                            {getPaginationItems()}
+                            <Pagination.Next onClick={() => handlePageChange(activePage + 1)} disabled={activePage === totalPages} />
+                            <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+                        </Pagination>
                 </div>
             </div>
         </div>    

@@ -110,7 +110,7 @@ function Navbar() {
             <div className="icon">
               <ion-icon name="diamond-outline"></ion-icon>
             </div>
-            <b className="name"> JewelHub</b>
+            <b className="name"> Sun Chadi Gahana</b>
           </div>
         </h4>
 

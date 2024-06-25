@@ -62,8 +62,10 @@ const Dashboard = () => {
   // );
 
   const totalNetWeightGold = itemsData?.data?.response
-  .filter(item => item.material === "Gold")
-  .reduce((total, item) => total + item.netWeight, 0);
+  .filter(item => item.material === "Gold" && item.available)
+  .reduce((total, item) => total + item.netWeight, 0)
+  .toFixed(2);
+
 
   // console.log(totalNetWeightGold);
 

@@ -31,6 +31,7 @@ function AddItems({ editItem }) {
     description: "",
     totalCost: "",
     itemImageUrl: "",
+    available:true
     // itemVideoUrl: "",
   };
 
@@ -429,6 +430,7 @@ function AddItems({ editItem }) {
                         <option disabled selected>--Select Category--</option>
                         <option>Ring</option>
                         <option>Necklace</option>
+                        <option>Chain</option>
                         <option>Ear Ring</option>
                         <option>Pendant</option>
                         <option>Jewel Set</option>

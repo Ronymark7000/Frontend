@@ -72,13 +72,16 @@ const Inventory = ({item}) => {
 
     const filteredItems = useMemo(() => {
         const filteredData = items.filter(item => {
-            const totalCost = calculateTotalCost(item);
-            return (
+            // Filter by search query
+            const matchesSearch = (
                 item.itemName.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 item.karat.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
                 item.category.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
-                totalCost.toString().toLowerCase().includes(searchQuery.toLowerCase())
+                calculateTotalCost(item).toString().toLowerCase().includes(searchQuery.toLowerCase())
             );
+
+            // Filter by availability
+            return matchesSearch && item.available === true;
         });
 
         return filteredData;
@@ -97,7 +100,7 @@ const Inventory = ({item}) => {
                 </label>
             </div>
                    
-            <div style={{marginLeft:"250px", minWidth:"1130px"}}>
+            <div style={{marginLeft:"280px", minWidth:"1130px"}}>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4" style={{ paddingTop: "60px" }}>
                 {filteredItems.length > 0 ? (
                     filteredItems.map((item, index) => (

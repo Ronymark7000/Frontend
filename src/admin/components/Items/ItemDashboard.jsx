@@ -1,18 +1,21 @@
 import { Button, Dropdown, Pagination } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { getItems } from "../../../services/ItemInstance";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../../../axiosInstance";
 import DataTable from "../DataTable";
 import { getCurrentMetalPrice } from "../../../services/PriceInstance";
+import "../Items/Item.css"
+import { emitErrorToast, emitSuccessToast } from "../../../site/components/Toast/EmitToast";
 
 const ItemDashboard = () => {
     const navigate = useNavigate();
    
     const [searchQuery, setSearchQuery] = useState(""); // State for search query
     const [activePage, setActivePage] = useState(1); // State for active page
-    const [itemsPerPage, setItemsPerPage] = useState(4); // State for items per page
+    const [itemsPerPage, setItemsPerPage] = useState(10); // State for items per page
+    const [itemsData, setItemsData] = useState(null); // Assuming itemsData is fetched and set correctly
   
     const [currentGoldPrice, setCurrentGoldPrice] = useState(null);
     const { data: itemData, isLoading: itemLoading, refetch: itemRefetch } = useQuery({
@@ -88,13 +91,13 @@ const ItemDashboard = () => {
     // Define columns for DataTable
     const columns = useMemo(() => {
         return [
-          {
-            accessorKey: "itemCode",
-            header: "Code",
-            cell: ({ getValue }) => {
-              return <div>{getValue()}</div>;
-            },
-          },
+          // {
+          //   accessorKey: "itemCode",
+          //   header: "Code",
+          //   cell: ({ getValue }) => {
+          //     return <div>{getValue()}</div>;
+          //   },
+          // },
           {
             accessorKey: "itemName",
             header: "Item Name",
@@ -170,7 +173,7 @@ const ItemDashboard = () => {
                     fetchImageUrl();
                 }, [getValue]);
 
-                console.log(imageUrl)
+                // console.log(imageUrl)
         
                 return (
                     <div>
@@ -220,6 +223,58 @@ const ItemDashboard = () => {
                 return <div>Rs {totalCosts}</div>; 
             },
         },
+
+      //   {
+      //     accessorKey: "available",
+      //     header: "In Stock",
+          
+      //     cell: ({ getValue }) => {
+      //         return <div>{getValue() ? "In Stock" : "Out of Stock"}</div>;
+      //     },
+      // },
+   
+      {
+        accessorKey: "available",
+        header: "In Stock",
+        cell: ({ row }) => {
+          const itemCode = row.original.itemCode;
+          const [isAvailable, setIsAvailable] = useState(row.original.available);
+      
+          const handleToggle = () => {
+            const newAvailability = !isAvailable;
+            setIsAvailable(newAvailability); // Update state immediately
+      
+            console.log("Availability toggled for ID:", itemCode, newAvailability);
+      
+            // Send a request to update the availability status in the backend
+            axiosInstance
+              .patch(`/${itemCode}/availability`, { available: newAvailability })
+              .then(() => {
+                // console.log("Availability update successful for Item:", itemCode);
+                emitSuccessToast("Status Updated Successfully");
+              })
+              .catch((error) => {
+                console.error("Error updating availability:", error);
+                emitErrorToast("Could not update the status");
+                // Restore the original state if update fails
+                setIsAvailable(!newAvailability);
+              });
+          };
+      
+          return (
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={isAvailable}
+                onChange={handleToggle}
+              />
+              <span className="slider round"></span>
+            </label>
+          );
+        },
+      },
+      
+
         {
             accessorKey: "actions",
             header: "Delete Item",
@@ -268,6 +323,55 @@ const ItemDashboard = () => {
         return <div>Loading...</div>;
     }
 
+    const getPaginationItems = () => {
+      const paginationItems = [];
+      let startPage = Math.max(1, activePage - 2);
+      let endPage = Math.min(totalPages, activePage + 2);
+
+      if (activePage <= 3) {
+          startPage = 1;
+          endPage = Math.min(5, totalPages);
+      } else if (activePage > totalPages - 3) {
+          startPage = Math.max(totalPages - 4, 1);
+          endPage = totalPages;
+      }
+
+      // Add first page and ellipsis if needed
+      if (startPage > 1) {
+          paginationItems.push(
+              <Pagination.Item key={1} active={1 === activePage} onClick={() => handlePageChange(1)}>
+                  1
+              </Pagination.Item>
+          );
+          if (startPage > 2) {
+              paginationItems.push(<Pagination.Ellipsis key="start-ellipsis" />);
+          }
+      }
+
+      // Add range of pages
+      for (let page = startPage; page <= endPage; page++) {
+          paginationItems.push(
+              <Pagination.Item key={page} active={page === activePage} onClick={() => handlePageChange(page)}>
+                  {page}
+              </Pagination.Item>
+          );
+      }
+
+      // Add ellipsis and last page if needed
+      if (endPage < totalPages) {
+          if (endPage < totalPages - 1) {
+              paginationItems.push(<Pagination.Ellipsis key="end-ellipsis" />);
+          }
+          paginationItems.push(
+              <Pagination.Item key={totalPages} active={totalPages === activePage} onClick={() => handlePageChange(totalPages)}>
+                  {totalPages}
+              </Pagination.Item>
+          );
+      }
+
+      return paginationItems;
+  };
+
     // Render DataTable with filtered and paginated data
     return (
         <>
@@ -279,10 +383,10 @@ const ItemDashboard = () => {
                             {itemsPerPage}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => handleItemsPerPageChange(4)}>4</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleItemsPerPageChange(8)}>8</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(5)}>5</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleItemsPerPageChange(10)}>10</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleItemsPerPageChange(15)}>15</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleItemsPerPageChange(20)}>20</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
@@ -299,14 +403,10 @@ const ItemDashboard = () => {
                         <DataTable style={{ color: "#62605A" }} columns={columns} data={paginatedData} />
                     </div>
                     <div className="mt-3">
-                        <Pagination>
+                    <Pagination>
                             <Pagination.First onClick={() => handlePageChange(1)} />
                             <Pagination.Prev onClick={() => handlePageChange(activePage - 1)} disabled={activePage === 1} />
-                            {[...Array(totalPages).keys()].map((page) => (
-                                <Pagination.Item key={page + 1} active={page + 1 === activePage} onClick={() => handlePageChange(page + 1)}>
-                                    {page + 1}
-                                </Pagination.Item>
-                            ))}
+                            {getPaginationItems()}
                             <Pagination.Next onClick={() => handlePageChange(activePage + 1)} disabled={activePage === totalPages} />
                             <Pagination.Last onClick={() => handlePageChange(totalPages)} />
                         </Pagination>
