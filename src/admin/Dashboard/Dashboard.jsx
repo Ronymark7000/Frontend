@@ -1,8 +1,9 @@
 // import GoldSilverChart from "../components/GoldSilverChart/GoldSilverChart";
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../../services/UserInstance";
-import LineChart from "../components/GoldSilverChart/LineChart";
-import PieChart from "../components/OrderChart/PieChart";
+import GoldLineChart from "../components/GoldSilverChart/LineChart";
+import SilverLineChart from "../components/GoldSilverChart/SilverLineChart";
+import OrderPieChart from "../components/OrderChart/PieChart";
 import "./dashboard.css"
 import { getItems } from "../../services/ItemInstance";
 import { getAllOrders } from "../../services/OrderInstance";
@@ -74,6 +75,33 @@ const Dashboard = () => {
   .reduce((total, item) => total + item.netWeight, 0);
 
   // console.log(totalNetWeightSilver);
+
+  const totalInStockItems = itemsData?.data?.response
+  .filter(item => item.available)
+  .length;
+
+  const filterItemsByPurity = (purity) => itemsData?.data?.response
+  .filter(item => item.material === "Gold" && item.karat === purity && item.available);
+
+const totalItems24K = filterItemsByPurity(24)?.length || 0;
+const totalNetWeight24K = filterItemsByPurity(24)
+  ?.reduce((total, item) => total + item.netWeight, 0)
+  .toFixed(2) || 0;
+
+const totalItems22K = filterItemsByPurity(22)?.length || 0;
+const totalNetWeight22K = filterItemsByPurity(22)
+  ?.reduce((total, item) => total + item.netWeight, 0)
+  .toFixed(2) || 0;
+
+const totalItems18K = filterItemsByPurity(18)?.length || 0;
+const totalNetWeight18K = filterItemsByPurity(18)
+  ?.reduce((total, item) => total + item.netWeight, 0)
+  .toFixed(2) || 0;
+
+const totalItems14K = filterItemsByPurity(14)?.length || 0;
+const totalNetWeight14K = filterItemsByPurity(14)
+  ?.reduce((total, item) => total + item.netWeight, 0)
+  .toFixed(2) || 0;
 
   const formattedInvestment = formatNumber(totalInvestment);
   const formattedNetWeightG = formatNumber(totalNetWeightGold);
@@ -164,13 +192,49 @@ const Dashboard = () => {
       {/* <!-- Order Detail List --> */}
 
       <div className="charts1">
+        <div className="chart22">
+
+          <div className="chart222">
+            <div className="text"> Available Stock Items: {totalInStockItems}</div>
+          </div>
+          
+          <div className="chart222">
+            <div className="text"> 24K Items : {totalItems24K} ({totalNetWeight24K} Tola)</div>
+          </div>
+
+          <div className="chart222">
+            <div className="text"> 22K Items : {totalItems22K} ({totalNetWeight22K} Tola)</div>
+          </div>
+
+          <div className="chart222">
+          <div className="text" style={{fontSize:"1.1rem", paddingTop:"20px"}}> 
+            <p> 
+              18K Items : {totalItems18K} ({totalNetWeight18K} Tola)<br/>
+              14K Items : {totalItems14K} ({totalNetWeight14K} Tola)
+            </p>
+          </div>
+          </div>
+
+         
+        </div>
+ 
         <div className="chart11">
           <h2>Gold Market Trend Graph</h2>
-          <LineChart/>
+          <GoldLineChart/>
+        </div>
+        
+
+        
+      </div>
+
+      <div className="charts2">
+        <div className="chart11" style={{width:"99%", marginLeft:"15px"}}>
+          <h2>Order Ratio</h2>
+          <OrderPieChart/>
         </div>
         <div className="chart11" id="doughnut-chart">
-          <h2>Order Ratio</h2>
-          <PieChart/>
+          <h2>Silver Market Trend Graph</h2>
+          <SilverLineChart/>
         </div>
 
         

@@ -84,18 +84,28 @@ body{
 .charts1{
     display: grid;
     position: relative;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 2fr;
     grid-gap: 16px;
     width: 100%;
     padding: 20px;
     margin-top: -30px;
 }
 
+.charts2{
+    display: grid;
+    position: relative;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 16px;
+    width: 100%;
+    padding: 20px;
+    margin-top: -10px;
+}
+
 .chart11{
     background: var(--gray);
     padding: 20px;
     border-radius: 10px;
-    box-shadow:  0 7px 25px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     width: 100%;
     color: var(--black);
     position: relative;
@@ -125,6 +135,44 @@ canvas{
     color: var(--black);
 }
 
+.chart22{
+    /* background: var(--gray); */
+    /* padding: 20px; */
+    border-radius: 10px;
+    /* box-shadow:  0 7px 25px rgba(0, 0, 0, 0.08); */
+    width: 100%;
+    color: var(--black);
+    position: relative;
+    height: 450px; 
+    min-height: 290px;
+    max-height: 450px;
+    margin-left: 10px;
+}
+
+.chart222{
+    height: 93px;
+    background-color: var(--gray);
+    position: relative;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    margin-left: 10px;
+    box-shadow:  0 7px 25px rgba(0, 0, 0, 0.08);
+    
+}
+
+.chart222:hover{
+    background: var(--white);
+    color: var(--black);   
+}
+
+.chart222 .text{
+    color: var(--gray1);
+    font-weight: 450;
+    font-size: 1.15rem;
+    margin-top: 0px; 
+    padding-top: 30px;
+    padding-left: 25px;
+}
 /* Responsive Code Starts Form Here */
 @media (max-width:991px) {
     .navigation{

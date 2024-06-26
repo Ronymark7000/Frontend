@@ -14,7 +14,7 @@ ChartJS.register(
     LineController
 );
 
-const LineChart = () => {
+const SilverLineChart = () => {
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
@@ -39,7 +39,7 @@ const LineChart = () => {
                     return;
                 }
 
-                const goldTolaData = priceResponse.map(item => parseFloat(item.goldTola.replace('Rs ', '')));
+                const silverTolaData = priceResponse.map(item => parseFloat(item.silverTola.replace('Rs ', '')));
                 const labels = priceResponse.map(item => {
                     const date = new Date(item.priceDate);
                     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -51,7 +51,7 @@ const LineChart = () => {
                     datasets: [
                         {
                             ...prevState.datasets[0],
-                            data: goldTolaData
+                            data: silverTolaData
                         }
                     ]
                 }));
@@ -147,4 +147,4 @@ const LineChart = () => {
     );
 }
 
-export default LineChart;
+export default SilverLineChart;
